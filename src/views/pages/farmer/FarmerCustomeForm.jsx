@@ -8,11 +8,10 @@ import {
   Button,
 } from '@mui/material';
 import { useEffect } from 'react';
-import {useTheme} from '@mui/material/styles';
 import MainCard from '../../../ui-component/cards/MainCard';
 import { fetchDistrictList, fetchTehsilList } from '../../../api/util-apis';
 import { saveFarmer, updateFarmer, deleteFarmer } from '../../../api/farmer-apis';
-import SubTableForm from './invoiceCustomeForm';
+import SubTableForm from './InvoiceSubTableForm';
 import { fetchManufacturerList } from '../../../api/manufacturer-apis';
 import { saveInvoice } from '../../../api/invoice-apis';
 

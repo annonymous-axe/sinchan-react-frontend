@@ -1,7 +1,6 @@
 import { useState } from "react";
 import FarmerTable from "./farmerList";
 import FarmerForm from "./FarmerCustomeForm";
-import InvoiceForm from "./invoiceCustomeForm";
 
 export default function farmer(){
 

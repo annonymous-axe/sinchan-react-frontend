@@ -16,4 +16,11 @@ async function saveInvoice(invoice){
     await Request('invoice', 'POST', invoice);
 }
 
-export {fetchInvoiceList, saveInvoice};
+async function fetchInvoiceDetails(invoiceId){
+
+    return Request('invoice?invoiceId='+invoiceId).then(response => {
+        return response.json();
+    });
+}
+
+export {fetchInvoiceList, saveInvoice, fetchInvoiceDetails};

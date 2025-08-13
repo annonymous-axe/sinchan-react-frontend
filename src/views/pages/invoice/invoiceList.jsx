@@ -5,9 +5,9 @@ import { Button } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 import CustomTable from '../../../ui-component/components/CustomeTable';
 import { fetchItemList, fetchItemDetails } from '../../../api/item-apis';
-import { fetchInvoiceList } from '../../../api/invoice-apis';
+import { fetchInvoiceList, fetchInvoiceDetails } from '../../../api/invoice-apis';
 
-export default function Table({ onCreate, onEdit }){
+export default function Table({ onEdit }){
 
     const [invoiceList, setInvoiceList] = useState([]);
 
@@ -23,9 +23,9 @@ export default function Table({ onCreate, onEdit }){
           sortable: false,
           renderCell: (params) => {
           const handleClick = () => {
-              const item = fetchItemDetails(`${params.row.id}`);
-              if(item != null){
-                  item.then(data => {
+              const invoice = fetchInvoiceDetails(`${params.row.id}`);
+              if(invoice != null){
+                  invoice.then(data => {
                       onEdit(data);
                   })
               }
