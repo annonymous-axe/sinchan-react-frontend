@@ -14,6 +14,10 @@ const UtilsShadow = Loadable(lazy(() => import('views/utilities/Shadow')));
 
 // sample page routing
 const SamplePage = Loadable(lazy(() => import('views/sample-page')));
+const Farmer = Loadable(lazy(() => import('views/pages/farmer/index')));
+const Item = Loadable(lazy(() => import('views/pages/item/index')));
+const Manufacturer = Loadable(lazy(() => import('views/pages/manufacturer/index')));
+const Invoice = Loadable(lazy(() => import('views/pages/invoice/index')));
 
 // ==============================|| MAIN ROUTING ||============================== //
 
@@ -47,9 +51,21 @@ const MainRoutes = {
       element: <UtilsShadow />
     },
     {
-      path: '/sample-page',
-      element: <SamplePage />
-    }
+      path: '/invoice/view',
+      element: <Invoice />
+    },
+    {
+      path: '/farmer/view',
+      element: <Farmer />
+    },
+    {
+      path: '/item/view',
+      element: <Item />
+    },
+    {
+      path: '/manufacturer/view',
+      element: <Manufacturer />
+    }      
   ]
 };
 

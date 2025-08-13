@@ -1,0 +1,15 @@
+import { TextField } from "@mui/material";
+
+function CustomeTextField({ label }){
+    return (
+        <TextField
+            fullWidth
+            label="Email"
+            type="email"
+            name="email"
+            value={formData.email}
+            onChange={handleChange}
+            required
+        />
+    );
+}

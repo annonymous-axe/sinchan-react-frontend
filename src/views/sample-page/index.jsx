@@ -1,20 +1,29 @@
-// material-ui
-import Typography from '@mui/material/Typography';
-
-// project imports
+// src/pages/UsersTablePage.js
+import React from 'react';
 import MainCard from 'ui-component/cards/MainCard';
 
-// ==============================|| SAMPLE PAGE ||============================== //
+import CustomTable from '../../ui-component/components/CustomeTable';
 
-export default function SamplePage() {
+const columns = [
+  { field: 'id', headerName: 'ID', width: 90 },
+  { field: 'name', headerName: 'Name', flex: 1 },
+  { field: 'email', headerName: 'Email', flex: 1 },
+  { field: 'role', headerName: 'Role', width: 150 }
+];
+
+const rows = [
+  { id: 1, name: 'John Doe', email: 'john@example.com', role: 'Admin' },
+  { id: 2, name: 'Jane Smith', email: 'jane@example.com', role: 'User' },
+  { id: 3, name: 'Alex Johnson', email: 'alex@example.com', role: 'Manager' },
+  { id: 4, name: 'Mary Brown', email: 'mary@example.com', role: 'User' }
+];
+
+const UsersTablePage = () => {
   return (
-    <MainCard title="Sample Card">
-      <Typography variant="body2">
-        Lorem ipsum dolor sit amen, consenter nipissing eli, sed do elusion tempos incident ut laborers et doolie magna alissa. Ut enif ad
-        minim venice, quin nostrum exercitation illampu laborings nisi ut liquid ex ea commons construal. Duos aube grue dolor in
-        reprehended in voltage veil esse colum doolie eu fujian bulla parian. Exceptive sin ocean cuspidate non president, sunk in culpa qui
-        officiate descent molls anim id est labours.
-      </Typography>
+    <MainCard title="User Management">
+      <CustomTable rows={rows} columns={columns} />
     </MainCard>
   );
-}
+};
+
+export default UsersTablePage;
