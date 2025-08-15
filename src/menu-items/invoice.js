@@ -26,13 +26,13 @@ const pages = {
       icon: icons.ReceiptIcon,
       url: '/invoice/view'
     },
-    // {
-    //   id: 'quotation',
-    //   title: 'Quotation',
-    //   type: 'item',
-    //   icon: icons.DescriptionIcon,
-    //   url: '/invoice/view'
-    // }    
+    {
+      id: 'quotation',
+      title: 'Quotation',
+      type: 'item',
+      icon: icons.DescriptionIcon,
+      url: '/invoice/view'
+    }    
   ]
 };
 

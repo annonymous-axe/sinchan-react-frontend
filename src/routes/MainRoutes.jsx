@@ -23,30 +23,25 @@ const Invoice = Loadable(lazy(() => import('views/pages/invoice/index')));
 const Category = Loadable(lazy(() => import('views/pages/category/index')));
 
 // ==============================|| MAIN ROUTING ||============================== //
-// auth provider
-function AuthenticateRoute({ children }){
 
-  console.log("check for authentication.");
+// authentication provider
+// function AuthenticateRoute({ children }){
 
-  const context = useAuth();
+//   const context = useAuth();
 
-  if(context.isAuthenticated){
-    console.log("authenticated");
-    
-    return children;
-  }
+//   if(context.isAuthenticated){
+//     return children;
+//   }
 
-  console.log("authentication fails.");
-  
-  return <Navigate to='/pages/login' />
-}
+//   return <Navigate to='/pages/login' />
+// }
 
 const MainRoutes = {
   path: '/',
   element: (
-      <AuthenticateRoute>
+      // <AuthenticateRoute>
         <MainLayout />
-      </AuthenticateRoute>
+      // </AuthenticateRoute>
   ),
   children: [
     {
@@ -78,6 +73,14 @@ const MainRoutes = {
       path: '/invoice/view',
       element: <Invoice />
     },
+    {
+      path: '/purchase/view',
+      element: <Invoice />
+    },
+    {
+      path: '/quotation/view',
+      element: <Invoice />
+    },    
     {
       path: '/farmer/view',
       element: <Farmer />
