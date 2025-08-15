@@ -1,18 +1,15 @@
+import { apiClient } from "./apiClient";
+
 async function fetchDistrictList(){
     
     var districtList = null;
 
-    await fetch("http://localhost:8080/district/list", {
-        method: 'GET'
-    })
-    .then(resonse => {
-
-        if(resonse.ok){
-            districtList = resonse.json();
+    await apiClient.get('district/list').then(response => {
+        if(response.status == 200){
+            districtList = response.data;
         }else{
-            console.log('error : '+resonse);
+            console.error("Error : "+response);
         }
-        
     })
 
     return districtList
@@ -22,20 +19,12 @@ async function fetchTehsilList(districtId){
 
     var tehsilList = null;
 
-    await fetch("http://localhost:8080/tehsil/list?districtId="+districtId, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        }
-    })
-    .then(resonse => {
-
-        if(resonse.ok){
-            tehsilList = resonse.json();
+    await apiClient.post('tehsil/list?districtId='+districtId).then(response => {
+        if(response.status == 200){
+            tehsilList = response.data;
         }else{
-            console.log('error : '+resonse);
+            console.error("Error : "+response);
         }
-        
     })
 
     return tehsilList

@@ -1,34 +1,61 @@
 import Request from "./api-request";
+import { apiClient } from "./apiClient";
 
 async function fetchManufacturerList(){
 
-    return Request('manufacturer/list').then(response => {
-        return response.json();
+    return await apiClient.get('manufacturer/list').then(response => {
+        if(response.status == 200){
+            return response.data;
+        }else{
+            console.error("Error : "+response);
+        }
     });
 }
 
 async function saveManufacturer(manufacturer){
 
-    return await Request('manufacturer', 'POST', manufacturer);
+    return await apiClient.post('manufacturer', manufacturer).then(response => {
+        if(response.status == 200){
+            return response.data;
+        }else{
+            console.error("Error : "+response);
+        }
+    });
 }
 
 async function fetchManufacturerDetails(manufacturerId){
 
-    return await Request('manufacturer?manufacturerId='+manufacturerId).then(response => {
-        return response.json();
+    return await apiClient.get('manufacturer?manufacturerId='+manufacturerId).then(response => {
+        if(response.status == 200){
+            return response.data;
+        }else{
+            console.error("Error : "+response);
+        }
     });
 
 }
 
 async function updateManufacturer(manufacturer){
 
-    return await Request('manufacturer', 'PUT', manufacturer);
+    return await apiClient.put('manufacturer', manufacturer).then(response => {
+        if(response.status == 200){
+            return response.data;
+        }else{
+            console.error("Error : "+response);
+        }
+    });
 
 }
 
 async function deleteManufacturer(manufacturerId){
 
-    return await Request('manufacturer?manufacturerId='+manufacturerId, 'DELETE');
+    return await apiClient.delete('manufacturer?manufacturerId='+manufacturerId).then(response => {
+        if(response.status == 200){
+            return response.data;
+        }else{
+            console.error("Error : "+response);
+        }
+    });
 
 }
 

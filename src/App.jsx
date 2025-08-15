@@ -7,19 +7,18 @@ import router from 'routes';
 import NavigationScroll from 'layout/NavigationScroll';
 
 import ThemeCustomization from 'themes';
-
-// auth provider
+import AuthProvider from './contexts/authContext';
 
 // ==============================|| APP ||============================== //
 
 export default function App() {
   return (
-    <ThemeCustomization>
-      <NavigationScroll>
-        <>
+    <AuthProvider>
+      <ThemeCustomization>
+        <NavigationScroll>
           <RouterProvider router={router} />
-        </>
-      </NavigationScroll>
-    </ThemeCustomization>
+        </NavigationScroll>
+      </ThemeCustomization>
+    </AuthProvider>
   );
 }

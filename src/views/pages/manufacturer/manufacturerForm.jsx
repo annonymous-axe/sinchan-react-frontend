@@ -18,21 +18,21 @@ const CustomForm = ({ onBack, manufacturer }) => {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    saveManufacturer(formData);
+    await saveManufacturer(formData);
     onBack();
   };
 
-  const handleUpdateItem = (e) => {
+  const handleUpdateItem = async (e) => {
     e.preventDefault();
-    updateManufacturer(formData);
+    await updateManufacturer(formData);
     onBack();
   };
 
-  const handleDeleteItem = (e) => {
+  const handleDeleteItem = async (e) => {
     e.preventDefault();
-    deleteManufacturer(formData.id);
+    await deleteManufacturer(formData.id);
     onBack();
   };
 

@@ -1,61 +1,65 @@
-import Request from "./api-request";
+import { apiClient } from "./apiClient";
 
 
 async function fetchItemList(){
 
-    return await Request('item/list').then(response => {
-        return response.json();
+    return await apiClient.get('item/list').then(response => {
+        return responseData(response);
     });
 
 }
 
 async function saveItem(item){
 
-    return await Request('item', 'POST', item);
+    await apiClient.post('item', item);
 
 }
 
 async function fetchItemDetails(itemId){
 
-    return await Request('item?itemId='+itemId).then(response => {
-        return response.json();
+    return await apiClient.get('item?itemId='+itemId).then(response => {
+        return responseData(response);
     });
 
 }
 
 async function updateItem(item){
 
-    return await Request('item', 'PUT', item);
+    await apiClient.put('item', item);
 
 }
 
 async function deleteItem(itemId){
 
-    return await Request('item?itemId='+itemId, 'DELETE').then(response => {
-        return response.json();
-    });
+    await apiClient.delete('item?itemId='+itemId);
 
 }
 
 async function fetchItemListFromCategoryId(categoryId){
 
     if(categoryId != null && categoryId != undefined){
-        return await Request('item/list/from-category-id?categoryId='+categoryId).then(response => {
-            return response.json();
+        return await apiClient.get('item/list/from-category-id?categoryId='+categoryId).then(response => {
+            return responseData(response);
         });
     }
 }
 
 async function fetchItemDetailsFromItemId(itemId, manufacturerId){
 
-    console.log(itemId+" && "+manufacturerId);
-    
-
     if(itemId != null && itemId != undefined && manufacturerId != null && manufacturerId != undefined){
-        return await Request('item/details?itemId='+itemId+'&manufacturerId='+manufacturerId).then(response => {
-            return response.json();
+        return await apiClient.get('item/details?itemId='+itemId+'&manufacturerId='+manufacturerId).then(response => {
+            return responseData(response);
         });
     }else{
+        return [];
+    }
+}
+
+function responseData(response){
+    if(response.status){
+        return response.data
+    }else{
+        console.error("Error : "+response);
         return [];
     }
 }

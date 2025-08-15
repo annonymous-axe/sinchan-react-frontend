@@ -60,21 +60,21 @@ const CustomForm = ({ onBack, item }) => {
     setItemManufacturerDetailsList(updatedList);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    saveItem({ ...formData, itemManufacturerDetailsList: itemManufacturerDetailsList });
+    await saveItem({ ...formData, itemManufacturerDetailsList: itemManufacturerDetailsList });
     onBack();
   };
 
-  const handleUpdateItem = (e) => {
+  const handleUpdateItem = async (e) => {
     e.preventDefault();
-    updateItem({ ...formData, itemManufacturerDetailsList: itemManufacturerDetailsList });
+    await updateItem({ ...formData, itemManufacturerDetailsList: itemManufacturerDetailsList });
     onBack();
   };
 
-  const handleDeleteItem = (e) => {
+  const handleDeleteItem = async (e) => {
     e.preventDefault();
-    deleteItem(formData.id);
+    await deleteItem(formData.id);
     onBack();
   };
 

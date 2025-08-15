@@ -1,10 +1,15 @@
-import Request from "./api-request";
+import { apiClient } from "./apiClient";
 
 async function fetchCategoryList(){
 
-    return await Request('category/list').then(response => {
-        return response.json();
-    });
+    return await apiClient.get('category/list').then(response => {
+        if(response.status == 200){
+            return response.data
+        }else{
+            console.warn("Error : "+response);
+            return [];
+        }
+    })
 
 }
 

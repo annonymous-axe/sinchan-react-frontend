@@ -27,27 +27,27 @@ const CustomForm = ({ onBack, onGenerateInvoice, farmer, showInvoiceItemList }) 
         }));
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        saveFarmer(formData);
+        await saveFarmer(formData);
         onBack();
     };
 
-    const handleUdateFarmer = (e) => {
+    const handleUdateFarmer = async (e) => {
       e.preventDefault();
-      updateFarmer(formData);
+      await updateFarmer(formData);
       onBack();
     }
 
-    const handleDeleteFarmer = (e) => {
+    const handleDeleteFarmer = async (e) => {
       e.preventDefault();
-      deleteFarmer(formData.id);
+      await deleteFarmer(formData.id);
       onBack();
     }
 
-    const handleGenerateInvoice = (e) => {
+    const handleGenerateInvoice = async (e) => {
       e.preventDefault();
-      onGenerateInvoice(formData);
+      await onGenerateInvoice(formData);
     }
 
     const generateInvoice = (e) => {

@@ -1,11 +1,12 @@
-import Request from "./api-request";
+import { apiClient } from "./apiClient";
 
 async function fetchInvoiceList(){
 
-    return await Request('invoice/list').then(response => {
-        if(response!=null && response!=undefined){  
-            return response.json();
+    return await apiClient.get('invoice/list').then(response => {
+        if(response.status == 200){
+            return response.data;
         }else{
+            console.warn("Error : "+response);
             return [];
         }
     })
@@ -13,13 +14,19 @@ async function fetchInvoiceList(){
 
 async function saveInvoice(invoice){
 
-    await Request('invoice', 'POST', invoice);
+    await apiClient.post('invoice', invoice);
+
 }
 
 async function fetchInvoiceDetails(invoiceId){
 
-    return Request('invoice?invoiceId='+invoiceId).then(response => {
-        return response.json();
+    return await apiClient.get('invoice?invoiceId='+invoiceId).then(response => {
+        if(response.status == 200){
+            return response.data;
+        }else{
+            console.warn("Error : "+response);
+            return null;
+        }
     });
 }
 

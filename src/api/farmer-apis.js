@@ -1,13 +1,14 @@
-import Request from "./api-request";
+import { apiClient } from "./apiClient";
 
 async function fetchFarmerList(){
 
     var farmerList = null;
-    await fetch('http://localhost:8080/farmer/list', {
-        method: 'GET',
-    }).then(response => {
-        if(response.ok){
-            farmerList = response.json();
+
+    await apiClient.get('farmer/list').then(response => {
+        
+        if(response.status == 200){
+            farmerList = response.data;
+            console.log(farmerList);
         }else{
             console.error("Error : "+response.status);
             return null;
@@ -19,75 +20,44 @@ async function fetchFarmerList(){
 
 function saveFarmer(farmer){
 
-    fetch('http://localhost:8080/farmer', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(farmer)
-    }).then(response => {
-        
-        if(response.ok){
-            console.log("Farmed saved!");
+    apiClient.post('farmer', farmer).then(response => {
+        if(response.status != 200){
+            console.error(response.status);
         }
-        
-    })
+    });
 
 }
 
 async function fetchFarmerDetails(farmerId){
 
-    var farmer = null;
-
-    await fetch('http://localhost:8080/farmer/'+farmerId,{
-        method: 'GET',
-        headers: {
-            'Content-Type': 'application/json'
-        }
-    }).then(response => {
-        if(response.ok){
-            farmer = response.json();
+    return await apiClient.get('farmer/'+farmerId).then(response => {
+        if(response.status == 200){
+            return response.data;
         }else{
-            console.log("Error : "+response.status);
+            console.warn("Error : "+response);
+            return null;
         }
     })
-
-    return farmer
 
 }
 
-function updateFarmer(farmer){
+async function updateFarmer(farmer){
 
-    fetch('http://localhost:8080/farmer', {
-        method: 'PUT',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(farmer)
-    }).then(response => {
-        
-        if(response.ok){
-            console.log("Farmed updated!");
+    await apiClient.put('farmer', farmer).then(response => {
+        if(!response.ok){
+            console.error(response.status);
         }
-        
-    })
+    });
 
 }
 
 async function deleteFarmer(farmerId){
 
-    await fetch('http://localhost:8080/farmer?farmerId='+farmerId, {
-        method: 'DELETE',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-    }).then(response => {
-        
-        if(response.ok){
-            console.log("Farmed deleted!");
+    await apiClient.delete('farmer?farmerId='+farmerId).then(response => {
+        if(!response.ok){
+            console.error(response.status);
         }
-        
-    })
+    });
 
 }
 

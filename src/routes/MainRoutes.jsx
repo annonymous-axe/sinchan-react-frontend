@@ -3,6 +3,8 @@ import { lazy } from 'react';
 // project imports
 import MainLayout from 'layout/MainLayout';
 import Loadable from 'ui-component/Loadable';
+import { useAuth } from '../contexts/authContext';
+import { Navigate } from 'react-router';
 
 // dashboard routing
 const DashboardDefault = Loadable(lazy(() => import('views/dashboard/Default')));
@@ -21,10 +23,31 @@ const Invoice = Loadable(lazy(() => import('views/pages/invoice/index')));
 const Category = Loadable(lazy(() => import('views/pages/category/index')));
 
 // ==============================|| MAIN ROUTING ||============================== //
+// auth provider
+function AuthenticateRoute({ children }){
+
+  console.log("check for authentication.");
+
+  const context = useAuth();
+
+  if(context.isAuthenticated){
+    console.log("authenticated");
+    
+    return children;
+  }
+
+  console.log("authentication fails.");
+  
+  return <Navigate to='/pages/login' />
+}
 
 const MainRoutes = {
   path: '/',
-  element: <MainLayout />,
+  element: (
+      <AuthenticateRoute>
+        <MainLayout />
+      </AuthenticateRoute>
+  ),
   children: [
     {
       path: '/',
