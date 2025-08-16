@@ -8,8 +8,10 @@ export default function Item(){
 
         id: '',
         categoryId: '',
-        categoryName: '',
-        itemName: '',
+        categoryNameEn: '',
+        categoryNameMh: '',
+        itemNameEn: '',
+        itemNameMh: '',
         measurementType: '',
         gstRate: ''
     };

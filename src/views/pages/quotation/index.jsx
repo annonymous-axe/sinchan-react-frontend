@@ -1,6 +1,6 @@
 import { useState } from "react";
 import InvoiceTable from "./invoiceList";
-import CustomForm from "./InvoiceCustomeForm";
+// import CustomForm from "./InvoiceCustomeForm";
 
 export default function invoice(){
 
@@ -8,7 +8,8 @@ export default function invoice(){
 
         id: '',
         farmer: '',
-        farmerName: '',
+        farmerNameEn: '',
+        farmerNameMh: '',
         email: '',
         contactNo: '',
         address: '',
@@ -51,9 +52,9 @@ export default function invoice(){
                 <InvoiceTable onCreate={createInvoice} onEdit={editInvoice} />
             }
             
-            {showForm &&
+            {/* {showForm &&
                 <CustomForm onBack={backInvoice} invoice={invoice}/>
-            }
+            } */}
         </div>
     );
 }

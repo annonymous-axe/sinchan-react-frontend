@@ -10,7 +10,7 @@ import {
 import { useEffect } from 'react';
 import MainCard from '../../../ui-component/cards/MainCard';
 import { fetchDistrictList, fetchTehsilList } from '../../../api/util-apis';
-import { saveFarmer, updateFarmer, deleteFarmer } from '../../../api/farmer-apis';
+import { saveFarmer, updateFarmer, deleteFarmer, fetchSanchList } from '../../../api/farmer-apis';
 import SubTableForm from './InvoiceSubTableForm';
 import { fetchManufacturerList } from '../../../api/manufacturer-apis';
 import { saveInvoice } from '../../../api/invoice-apis';
@@ -63,13 +63,13 @@ const CustomForm = ({ onBack, onGenerateInvoice, farmer, showInvoiceItemList }) 
       onBack();
     }
 
-    // select fields list
-    const sanchList = [
-        { value: 'Thibak', label: 'Thibak' },
-        { value: 'Tushar', label: 'Tushar' },
-        { value: 'Mini-Sprinkal', label: 'Mini-Sprinkal' },
-        { value: 'Micro-Sprinkal', label: 'Micro-Sprinkal' }
-    ];
+    const [sanchList, setSanchList] = useState([
+        {
+            intKey: -1,
+            stringValue: "--- Select ---",
+            stringValue2: ""
+        }
+    ]);    
 
     const [tehsilList, setTehsilList] = useState([
         {
@@ -101,14 +101,15 @@ const CustomForm = ({ onBack, onGenerateInvoice, farmer, showInvoiceItemList }) 
             setDistrictList(data || []);
         });
 
-    }, []);
-
-    useEffect(() => {
-
 
         fetchManufacturerList().then(data=>{
             
             setManufacturerList(data || []);
+        });
+
+        fetchSanchList().then(data=>{
+            
+            setSanchList(data || []);
         });
 
     }, []);    
@@ -132,8 +133,8 @@ const CustomForm = ({ onBack, onGenerateInvoice, farmer, showInvoiceItemList }) 
             <TextField
               fullWidth
               label="Farmer Name"
-              name="farmerName"
-              value={formData.farmerName}
+              name="farmerNameEn"
+              value={formData.farmerNameEn}
               onChange={handleChange}
               required
             />
@@ -195,8 +196,8 @@ const CustomForm = ({ onBack, onGenerateInvoice, farmer, showInvoiceItemList }) 
               required
             >
               {sanchList.map((option) => (
-                <MenuItem key={option.value} value={option.value}>
-                  {option.label}
+                <MenuItem key={option.intKey} value={option.intKey}>
+                  {option.stringValue}
                 </MenuItem>
               ))}
             </TextField>
@@ -213,8 +214,8 @@ const CustomForm = ({ onBack, onGenerateInvoice, farmer, showInvoiceItemList }) 
               required
             >
               {districtList.map((district) => (
-                <MenuItem key={district.districtName} value={district.districtId}>
-                  {district.districtName}
+                <MenuItem key={district.districtNameEn} value={district.districtId}>
+                  {district.districtNameEn}
                 </MenuItem>
               ))}
             </TextField>
@@ -231,8 +232,8 @@ const CustomForm = ({ onBack, onGenerateInvoice, farmer, showInvoiceItemList }) 
               required
             >
               {tehsilList.map((tehsil) => (
-                <MenuItem key={tehsil.talukaName} value={tehsil.talukaId}>
-                  {tehsil.talukaName}
+                <MenuItem key={tehsil.tehsilNameEn} value={tehsil.tehsilId}>
+                  {tehsil.tehsilNameEn}
                 </MenuItem>
               ))}
             </TextField>
@@ -251,7 +252,7 @@ const CustomForm = ({ onBack, onGenerateInvoice, farmer, showInvoiceItemList }) 
               >
                 {manufacturerList.map((man) => (
                   <MenuItem key={man.id} value={man.id}>
-                    {man.name}
+                    {man.nameEn}
                   </MenuItem>
                 ))}
               </TextField>
@@ -262,8 +263,8 @@ const CustomForm = ({ onBack, onGenerateInvoice, farmer, showInvoiceItemList }) 
             <TextField
               fullWidth
               label="Address"
-              name="address"
-              value={formData.address}
+              name="addressEn"
+              value={formData.addressEn}
               onChange={handleChange}
               multiline
               rows={4}

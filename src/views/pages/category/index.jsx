@@ -9,7 +9,8 @@ export default function Item(){
 
     const initialStateOfForm = {
         id: '',
-        name: ''
+        nameEn: '',
+        nameMh: ''
     };
 
     const [showForm, setShowForm] = useState(false);

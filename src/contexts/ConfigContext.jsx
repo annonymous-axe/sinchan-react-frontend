@@ -37,6 +37,13 @@ function ConfigProvider({ children }) {
     });
   };
 
+  const onChangLanguage = (lang) => {
+    setConfig({
+      ...config,
+      lang: lang
+    })
+  }
+
   const onReset = () => {
     setConfig({ ...defaultConfig });
   };
@@ -47,7 +54,8 @@ function ConfigProvider({ children }) {
         ...config,
         onChangeFontFamily,
         onChangeBorderRadius,
-        onReset
+        onReset,
+        onChangLanguage
       }}
     >
       {children}

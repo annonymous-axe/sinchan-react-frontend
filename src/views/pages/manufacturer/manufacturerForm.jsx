@@ -45,8 +45,8 @@ const CustomForm = ({ onBack, manufacturer }) => {
             <TextField
               fullWidth
               label="Manufacturer Name"
-              name="name"
-              value={formData.name}
+              name="nameEn"
+              value={formData.nameEn}
               onChange={handleChange}
               required
             />

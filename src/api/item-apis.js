@@ -9,6 +9,14 @@ async function fetchItemList(){
 
 }
 
+async function fetchUnitList(){
+
+    return await apiClient.get('unit/list').then(response => {
+        return responseData(response);
+    });
+
+}
+
 async function saveItem(item){
 
     await apiClient.post('item', item);
@@ -64,4 +72,4 @@ function responseData(response){
     }
 }
 
-export {fetchItemList, saveItem, fetchItemDetails, updateItem, deleteItem, fetchItemListFromCategoryId, fetchItemDetailsFromItemId}
+export {fetchItemList, saveItem, fetchItemDetails, updateItem, deleteItem, fetchItemListFromCategoryId, fetchItemDetailsFromItemId, fetchUnitList}

@@ -8,7 +8,8 @@ export default function invoice(){
     const [invoice, setInvoice] = useState({
 
         id: '',
-        farmerName: '',
+        farmerNameEn: '',
+        farmerNameMh: '',
         email: '',
         contactNo: '',
         address: '',

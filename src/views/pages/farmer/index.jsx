@@ -7,10 +7,12 @@ export default function farmer(){
     const initialStateOfForm = {
 
         id: '',
-        farmerName: '',
+        farmerNameEn: '',
+        farmerNameMh: '',
         email: '',
         contactNo: '',
-        address: '',
+        addressEn: '',
+        addressMh: '',
         sanch: '',
         district: '',
         tehsil: '',

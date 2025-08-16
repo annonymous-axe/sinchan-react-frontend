@@ -39,7 +39,8 @@ import { useAuth } from '../../../../contexts/authContext';
 export default function ProfileSection() {
   const theme = useTheme();
   const { borderRadius } = useConfig();
-  const [sdm, setSdm] = useState(true);
+  const { lang, onChangLanguage } = useConfig();  
+  const [sdm, setSdm] = useState(lang);
   const [value, setValue] = useState('');
   const [notification, setNotification] = useState(false);
   const [selectedIndex] = useState(-1);
@@ -68,6 +69,13 @@ export default function ProfileSection() {
 
     setOpen(false);
   };
+
+  const changeLang = (e) => {
+
+    setSdm(e.target.checked);
+    onChangLanguage(e.target.checked)
+
+  }
 
   const prevOpen = useRef(open);
   useEffect(() => {
@@ -193,7 +201,7 @@ export default function ProfileSection() {
                                   <Switch
                                     color="primary"
                                     checked={sdm}
-                                    onChange={(e) => setSdm(e.target.checked)}
+                                    onChange={changeLang}
                                     name="sdm"
                                     size="small"
                                   />

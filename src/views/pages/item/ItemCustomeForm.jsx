@@ -17,12 +17,13 @@ import { Add, Delete } from '@mui/icons-material';
 import MainCard from '../../../ui-component/cards/MainCard';
 import { fetchCategoryList } from '../../../api/category-apis';
 import { fetchManufacturerList } from '../../../api/manufacturer-apis';
-import { saveItem, updateItem, deleteItem } from '../../../api/item-apis';
+import { saveItem, updateItem, deleteItem, fetchUnitList } from '../../../api/item-apis';
 
 const CustomForm = ({ onBack, item }) => {
   const [formData, setFormData] = useState(item);
   const [categoryList, setCategoryList] = useState([]);
   const [manufacturerList, setManufacturerList] = useState([]);
+  const [unitList, setUnitList] = useState([]);
 
   // Dynamic subtable state
   const [itemManufacturerDetailsList, setItemManufacturerDetailsList] = useState([
@@ -96,6 +97,10 @@ const CustomForm = ({ onBack, item }) => {
     fetchManufacturerList().then((data) => {
       setManufacturerList(data || []);
     });
+
+    fetchUnitList().then((data) => {
+      setUnitList(data || []);
+    })
   }, []);
 
   return (
@@ -107,8 +112,8 @@ const CustomForm = ({ onBack, item }) => {
             <TextField
               fullWidth
               label="Item Name"
-              name="itemName"
-              value={formData.itemName}
+              name="itemNameEn"
+              value={formData.itemNameEn}
               onChange={handleChange}
               required
             />
@@ -126,7 +131,7 @@ const CustomForm = ({ onBack, item }) => {
             >
               {categoryList.map((category) => (
                 <MenuItem key={category.id} value={category.id}>
-                  {category.name}
+                  {category.nameEn}
                 </MenuItem>
               ))}
             </TextField>
@@ -134,13 +139,20 @@ const CustomForm = ({ onBack, item }) => {
 
           <Grid item xs={12} sm={6}>
             <TextField
+              select
               fullWidth
               label="Measurement Type"
               name="measurementType"
               value={formData.measurementType}
               onChange={handleChange}
               required
-            />
+            >
+              {unitList.map((unit) => (
+                <MenuItem key={unit.intKey} value={unit.intKey}>
+                  {unit.stringValue}
+                </MenuItem>
+              ))}            
+            </TextField>
           </Grid>
 
           <Grid item xs={12} sm={6}>
@@ -183,7 +195,7 @@ const CustomForm = ({ onBack, item }) => {
                           >
                             {manufacturerList.map((m) => (
                               <MenuItem key={m.id} value={m.id}>
-                                {m.name}
+                                {m.nameEn}
                               </MenuItem>
                             ))}
                           </TextField>

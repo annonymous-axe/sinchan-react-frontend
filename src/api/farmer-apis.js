@@ -8,7 +8,6 @@ async function fetchFarmerList(){
         
         if(response.status == 200){
             farmerList = response.data;
-            console.log(farmerList);
         }else{
             console.error("Error : "+response.status);
             return null;
@@ -18,9 +17,26 @@ async function fetchFarmerList(){
     return farmerList;
 }
 
-function saveFarmer(farmer){
+async function fetchSanchList(){
 
-    apiClient.post('farmer', farmer).then(response => {
+    var farmerList = null;
+
+    await apiClient.get('sanch/list').then(response => {
+        
+        if(response.status == 200){
+            farmerList = response.data;
+        }else{
+            console.error("Error : "+response.status);
+            return null;
+        }
+    })
+
+    return farmerList;
+}
+
+async function saveFarmer(farmer){
+
+    await apiClient.post('farmer', farmer).then(response => {
         if(response.status != 200){
             console.error(response.status);
         }
@@ -63,4 +79,4 @@ async function deleteFarmer(farmerId){
 
 
 
-export {fetchFarmerList, saveFarmer, fetchFarmerDetails, updateFarmer, deleteFarmer}
+export {fetchFarmerList, saveFarmer, fetchFarmerDetails, updateFarmer, deleteFarmer, fetchSanchList}

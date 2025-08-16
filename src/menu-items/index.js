@@ -6,7 +6,7 @@ import purchase from './purchase';
 // ==============================|| MENU ITEMS ||============================== //
 
 const menuItems = {
-  items: [dashboard, invoice, purchase, masters]
+  items: [dashboard, invoice, masters]
 };
 
 export default menuItems;

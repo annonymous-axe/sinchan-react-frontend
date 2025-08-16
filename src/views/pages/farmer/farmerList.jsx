@@ -1,19 +1,28 @@
 // src/pages/UsersTablePage.js
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
+
+import useConfig from '../../../hooks/useConfig';
 import MainCard from 'ui-component/cards/MainCard';
 import { Button } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 import CustomTable from '../../../ui-component/components/CustomeTable';
-import { useNavigate } from 'react-router';
 import { fetchFarmerList, fetchFarmerDetails } from '../../../api/farmer-apis';
 
 export default function FarmerTable({ onCreate, onEdit }){
 
+    const { lang } = useConfig();
     const [farmerList, setFarmerList] = useState([]);
+
+    var farmerNameFied = 'farmerNameEn';
+
+    if(lang){
+      farmerNameFied = 'farmerNameMh';
+    }
+    
 
     const columns = [
       { field: 'id', headerName: 'ID', width: 90 },
-      { field: 'farmerName', headerName: 'Name', flex: 1 },
+      { field: farmerNameFied, headerName: 'Name', flex: 1 },
       { field: 'email', headerName: 'Email', flex: 1 },
       { field: 'contactNo', headerName: 'Contact No', width: 150 },
         {
@@ -56,14 +65,12 @@ export default function FarmerTable({ onCreate, onEdit }){
 
     }, []);
 
-    const navigate = useNavigate();
-
     function createFarmer(){
         onCreate();
     }
 
   return (
-    <MainCard title="Famers List"
+    <MainCard title="Farmers List"
       secondary={
         <Button
           variant="contained"

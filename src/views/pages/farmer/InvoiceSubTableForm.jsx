@@ -21,10 +21,10 @@ import { fetchItemListFromCategoryId, fetchItemDetailsFromItemId } from '../../.
 
 const SubTableForm = ({ invoice, setInvoice, tableTitle }) => {
   const [categoryList, setCategoryList] = useState([]);
-  const [itemList, setItemList] = useState([]);
+  // const [itemList, setItemList] = useState([]);
 
   const [invoiceItemList, setItemDetailsList] = useState([
-    { id: -1, categoryId: 0, cmlNumber: '', avlQuantity: 0, rate: 0, quantity: 0, unit: '', total: 0, itemId: '' }
+    { id: -1, categoryId: 0, cmlNumber: '', avlQuantity: 0, rate: 0, quantity: 0, unit: '', total: 0, itemId: '', itemList: [] }
   ]);
 
   // Sync invoice initially
@@ -39,7 +39,7 @@ const SubTableForm = ({ invoice, setInvoice, tableTitle }) => {
 
     if (field === 'categoryId') {
       await fetchItemListFromCategoryId(value).then((data) => {
-        setItemList(data || []);
+        updatedList[index].itemList = data || [];
       });
     }
 
@@ -63,7 +63,7 @@ const SubTableForm = ({ invoice, setInvoice, tableTitle }) => {
   const addItemRow = () => {
     const newList = [
       ...invoiceItemList,
-      { id: -1, categoryId: 0, cmlNumber: '', avlQuantity: 0, rate: 0, quantity: 0, unit: '', total: 0, itemId: '' }
+      { id: -1, categoryId: 0, cmlNumber: '', avlQuantity: 0, rate: 0, quantity: 0, unit: '', total: 0, itemId: '', itemList: [] }
     ];
     setItemDetailsList(newList);
     setInvoice({ ...invoice, invoiceItemList: newList });
@@ -119,7 +119,7 @@ const SubTableForm = ({ invoice, setInvoice, tableTitle }) => {
                       >
                         {categoryList.map((cat) => (
                           <MenuItem key={cat.id} value={cat.id}>
-                            {cat.name}
+                            {cat.nameEn}
                           </MenuItem>
                         ))}
                       </TextField>
@@ -132,7 +132,7 @@ const SubTableForm = ({ invoice, setInvoice, tableTitle }) => {
                         value={row.itemId || ''}
                         onChange={(e) => handleItemChange(index, 'itemId', e.target.value)}
                       >
-                        {itemList.map((item) => (
+                        {row.itemList.map((item) => (
                           <MenuItem key={item.intKey} value={item.intKey}>
                             {item.stringValue}
                           </MenuItem>
