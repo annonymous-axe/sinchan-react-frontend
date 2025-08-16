@@ -14,6 +14,7 @@ import { saveFarmer, updateFarmer, deleteFarmer } from '../../../api/farmer-apis
 import SubTableForm from './InvoiceSubTableForm';
 import { fetchManufacturerList } from '../../../api/manufacturer-apis';
 import { saveInvoice } from '../../../api/invoice-apis';
+import { saveQuotation } from '../../../api/quotation-apis';
 
 const CustomForm = ({ onBack, onGenerateInvoice, farmer, showInvoiceItemList }) => {
 
@@ -50,7 +51,7 @@ const CustomForm = ({ onBack, onGenerateInvoice, farmer, showInvoiceItemList }) 
       await onGenerateInvoice(formData);
     }
 
-    const generateInvoice = (e) => {
+    const generateInvoice = async (e) => {
       e.preventDefault();
       saveInvoice({...formData, farmer: formData.id});
       onBack();
@@ -58,10 +59,8 @@ const CustomForm = ({ onBack, onGenerateInvoice, farmer, showInvoiceItemList }) 
 
     const generateQuotation = (e) => {
       e.preventDefault();
-      console.log("item details list : ");
-      console.log("\n");
-      console.log("Saving quotation....");
-      onGenerateInvoice(formData);
+      saveQuotation(formData)
+      onBack();
     }
 
     // select fields list

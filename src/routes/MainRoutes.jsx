@@ -3,7 +3,7 @@ import { lazy } from 'react';
 // project imports
 import MainLayout from 'layout/MainLayout';
 import Loadable from 'ui-component/Loadable';
-import { useAuth } from '../contexts/authContext';
+import { AuthContext, useAuth } from '../contexts/authContext';
 import { Navigate } from 'react-router';
 
 // dashboard routing
