@@ -58,18 +58,6 @@ const MainRoutes = {
       ]
     },
     {
-      path: 'typography',
-      element: <UtilsTypography />
-    },
-    {
-      path: 'color',
-      element: <UtilsColor />
-    },
-    {
-      path: 'shadow',
-      element: <UtilsShadow />
-    },
-    {
       path: '/invoice/view',
       element: <Invoice />
     },

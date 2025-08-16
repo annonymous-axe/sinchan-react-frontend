@@ -36,7 +36,7 @@ const status = [
   }
 ];
 
-export default function TotalGrowthBarChart({ isLoading }) {
+export default function TotalGrowthBarChart({ isLoading, data }) {
   const [value, setValue] = React.useState('today');
   const theme = useTheme();
   const { mode } = useConfig();
@@ -95,7 +95,7 @@ export default function TotalGrowthBarChart({ isLoading }) {
                       <Typography variant="subtitle2">Total Growth</Typography>
                     </Grid>
                     <Grid>
-                      <Typography variant="h3">$2,324.00</Typography>
+                      <Typography variant="h3">{data}</Typography>
                     </Grid>
                   </Grid>
                 </Grid>

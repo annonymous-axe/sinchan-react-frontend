@@ -23,6 +23,7 @@ import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 
 // project imports
+import FontFamily from '../../../Customization/FontFamily';
 import UpgradePlanCard from './UpgradePlanCard';
 import MainCard from 'ui-component/cards/MainCard';
 import Transitions from 'ui-component/extended/Transitions';
@@ -31,6 +32,7 @@ import useConfig from 'hooks/useConfig';
 // assets
 import User1 from 'assets/images/users/user-round.svg';
 import { IconLogout, IconSearch, IconSettings, IconUser } from '@tabler/icons-react';
+import { useAuth } from '../../../../contexts/authContext';
 
 // ==============================|| PROFILE MENU ||============================== //
 
@@ -42,6 +44,13 @@ export default function ProfileSection() {
   const [notification, setNotification] = useState(false);
   const [selectedIndex] = useState(-1);
   const [open, setOpen] = useState(false);
+  const [firmName, setFirmName] = useState('Firm Name');
+  const [userName, setUserName] = useState('User Name');
+
+  const authContext = useAuth();
+
+  // in future use authContext.user.userName
+  
 
   /**
    * anchorRef is used on different components and specifying one type leads to other components throwing an error
@@ -129,12 +138,12 @@ export default function ProfileSection() {
                     <Box sx={{ p: 2, pb: 0 }}>
                       <Stack>
                         <Stack direction="row" spacing={0.5} sx={{ alignItems: 'center' }}>
-                          <Typography variant="h4">Good Morning,</Typography>
-                          <Typography component="span" variant="h4" sx={{ fontWeight: 400 }}>
+                          <Typography variant="h4">{firmName}</Typography>
+                          {/* <Typography component="span" variant="h4" sx={{ fontWeight: 400 }}>
                             Johne Doe
-                          </Typography>
+                          </Typography> */}
                         </Stack>
-                        <Typography variant="subtitle2">Project Admin</Typography>
+                        <Typography variant="subtitle2">{userName}</Typography>
                       </Stack>
                       <OutlinedInput
                         sx={{ width: '100%', pr: 1, pl: 2, my: 2 }}
@@ -164,7 +173,13 @@ export default function ProfileSection() {
                         '&::-webkit-scrollbar': { width: 5 }
                       }}
                     >
-                      <UpgradePlanCard />
+
+                    <Grid size={12}>
+                      {/* font family */}
+                      <FontFamily />
+                      <Divider />
+                    </Grid>
+
                       <Divider />
                       <Card sx={{ bgcolor: 'primary.light', my: 2 }}>
                         <CardContent>
@@ -172,7 +187,7 @@ export default function ProfileSection() {
                             <Grid>
                               <Grid container sx={{ alignItems: 'center', justifyContent: 'space-between' }}>
                                 <Grid>
-                                  <Typography variant="subtitle1">Start DND Mode</Typography>
+                                  <Typography variant="subtitle1">Translate Marathi</Typography>
                                 </Grid>
                                 <Grid>
                                   <Switch

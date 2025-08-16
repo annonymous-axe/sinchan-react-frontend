@@ -40,7 +40,7 @@ const CardWrapper = styled(MainCard)(({ theme }) => ({
   }
 }));
 
-export default function TotalIncomeLightCard({ isLoading, total, icon, label }) {
+export default function TotalIncomeLightCard({ isLoading, data, icon, label }) {
   const theme = useTheme();
 
   return (
@@ -67,7 +67,7 @@ export default function TotalIncomeLightCard({ isLoading, total, icon, label }) 
                 </ListItemAvatar>
                 <ListItemText
                   sx={{ py: 0, mt: 0.45, mb: 0.45 }}
-                  primary={<Typography variant="h4">${total}k</Typography>}
+                  primary={<Typography variant="h4">{data}</Typography>}
                   secondary={
                     <Typography variant="subtitle2" sx={{ color: 'grey.500', mt: 0.5 }}>
                       {label}

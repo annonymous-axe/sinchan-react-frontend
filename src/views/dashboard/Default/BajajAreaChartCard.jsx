@@ -15,7 +15,7 @@ import chartData from './chart-data/bajaj-area-chart';
 
 // ===========================|| DASHBOARD DEFAULT - BAJAJ AREA CHART CARD ||=========================== //
 
-export default function BajajAreaChartCard() {
+export default function BajajAreaChartCard({ data }) {
   const theme = useTheme();
 
   const orangeDark = theme.palette.secondary[800];
@@ -41,7 +41,7 @@ export default function BajajAreaChartCard() {
             </Grid>
             <Grid>
               <Typography variant="h4" sx={{ color: 'grey.800' }}>
-                $1839.00
+                {data}
               </Typography>
             </Grid>
           </Grid>
