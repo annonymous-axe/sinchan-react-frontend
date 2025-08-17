@@ -2,26 +2,17 @@ import { useState, useEffect } from 'react';
 import {
   Grid,
   TextField,
-  MenuItem,
-  Button,
-  IconButton,
   Table,
   TableHead,
   TableBody,
   TableRow,
   TableCell,
   Paper,
-  Typography,
   Box
 } from '@mui/material';
-import { Add, Delete } from '@mui/icons-material';
 import MainCard from '../../../ui-component/cards/MainCard';
-import { fetchCategoryList } from '../../../api/category-apis';
-import { fetchItemListFromCategoryId, fetchItemDetailsFromItemId } from '../../../api/item-apis';
 
-const SubTableForm = ({ invoice, setInvoice, tableTitle }) => {
-  const [categoryList, setCategoryList] = useState([]);
-  const [itemList, setItemList] = useState([]);
+const SubTableForm = ({ invoice, tableTitle }) => {
 
   return (
     <Grid item xs={12}>

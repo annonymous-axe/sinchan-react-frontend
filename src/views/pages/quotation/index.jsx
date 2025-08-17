@@ -1,6 +1,6 @@
 import { useState } from "react";
-import InvoiceTable from "./invoiceList";
-// import CustomForm from "./InvoiceCustomeForm";
+import QuotationTable from "./quotationList";
+import QuotationForm from "./quotationCustomeForm";
 
 export default function invoice(){
 
@@ -24,7 +24,8 @@ export default function invoice(){
         districtName: '',
         tehsilName: '',	
         aadharId: '',	
-        farmerId: ''
+        farmerId: '',
+        invoiceItemList: []
 
     };
 
@@ -49,12 +50,12 @@ export default function invoice(){
     return(
         <div>
             {!showForm &&
-                <InvoiceTable onCreate={createInvoice} onEdit={editInvoice} />
+                <QuotationTable onCreate={createInvoice} onEdit={editInvoice} />
             }
             
-            {/* {showForm &&
-                <CustomForm onBack={backInvoice} invoice={invoice}/>
-            } */}
+            {showForm &&
+                <QuotationForm onBack={backInvoice} invoice={invoice}/>
+            }
         </div>
     );
 }

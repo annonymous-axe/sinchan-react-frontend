@@ -22,6 +22,7 @@ const Manufacturer = Loadable(lazy(() => import('views/pages/manufacturer/index'
 const Invoice = Loadable(lazy(() => import('views/pages/invoice/index')));
 const Quotation = Loadable(lazy(() => import('views/pages/quotation/index')));
 const Category = Loadable(lazy(() => import('views/pages/category/index')));
+const Purchase = Loadable(lazy(() => import('views/pages/purchase/index')));
 
 // ==============================|| MAIN ROUTING ||============================== //
 
@@ -64,7 +65,7 @@ const MainRoutes = {
     },
     {
       path: '/purchase/view',
-      element: <Invoice />
+      element: <Purchase />
     },
     {
       path: '/quotation/view',

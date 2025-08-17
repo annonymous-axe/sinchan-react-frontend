@@ -20,7 +20,7 @@ async function savePurchase(purchase){
 
 async function fetchPurchaseDetails(purchaseId){
 
-    return await apiClient.get('purchase?purchaseId='+purchaseId).then(response => {
+    return await apiClient.get('purchase?purchaseOrderId='+purchaseId).then(response => {
         if(response.status == 200){
             return response.data;
         }else{

@@ -59,7 +59,7 @@ const CustomForm = ({ onBack, onGenerateInvoice, farmer, showInvoiceItemList }) 
 
     const generateQuotation = (e) => {
       e.preventDefault();
-      saveQuotation(formData)
+      saveQuotation({...formData, farmer: formData.id})
       onBack();
     }
 

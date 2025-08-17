@@ -4,6 +4,8 @@ async function fetchQuotationList(){
 
     return await apiClient.get('quotation/list').then(response => {
         if(response.status == 200){
+            console.log(response.data);
+            
             return response.data;
         }else{
             console.warn("Error : "+response);
@@ -21,7 +23,7 @@ async function saveQuotation(quotation){
 async function fetchQuotationDetails(quotationId){
 
     return await apiClient.get('quotation?quotationId='+quotationId).then(response => {
-        if(response.status == 200){
+        if(response.status == 200){ 
             return response.data;
         }else{
             console.warn("Error : "+response);

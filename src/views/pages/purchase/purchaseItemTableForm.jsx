@@ -17,38 +17,49 @@ import {
 import { Add, Delete } from '@mui/icons-material';
 import MainCard from '../../../ui-component/cards/MainCard';
 import { fetchCategoryList } from '../../../api/category-apis';
-import { fetchItemListFromCategoryId, fetchItemDetailsFromItemId } from '../../../api/item-apis';
+import { fetchItemListFromCategoryId, fetchItemDetailsFromItemId, fetchUnitList } from '../../../api/item-apis';
+import { fetchManufacturerList } from '../../../api/manufacturer-apis';
 
-const SubTableForm = ({ invoice, setInvoice, tableTitle }) => {
+const SubTableForm = ({ purchase, setPurchase, tableTitle }) => {
   const [categoryList, setCategoryList] = useState([]);
-  // const [itemList, setItemList] = useState([]);
+  const [unitList, setUnitList] = useState([]);
+  const [manufacturerList, setManufacturerList] = useState([]);
 
-  const [invoiceItemList, setItemDetailsList] = useState([
-    { id: -1, categoryId: 0, cmlNumber: '', avlQuantity: 0, rate: 0, quantity: 0, unit: '', total: 0, itemId: '', itemList: [] }
+  const [purchaseOrderItemsList, setPOItemList] = useState([
+    { 
+      itemId: null,
+
+      manufacturerId: -1,
+
+      quantity: 0,
+
+      rate: 0,
+
+      categoryId: -1,
+
+      cmlNumber: '',
+
+      totalAmount: 0,
+
+      purchaseOrderId: null,
+      
+      itemLblValList: [] 
+    }
   ]);
 
   // Sync invoice initially
-  useEffect(() => {
-    setInvoice({ ...invoice, invoiceItemList });
-  }, []);
+  // useEffect(() => {
+  //   setPurchase({ ...purchase, purchaseOrderItemsList });
+  // }, []);
 
   // Update row data
   const handleItemChange = async (index, field, value) => {
-    const updatedList = [...invoiceItemList];
+    const updatedList = [...purchaseOrderItemsList];
     updatedList[index][field] = value;
 
     if (field === 'categoryId') {
       await fetchItemListFromCategoryId(value).then((data) => {
-        updatedList[index].itemList = data || [];
-      });
-    }
-
-    if (field === 'itemId') {
-      await fetchItemDetailsFromItemId(value, invoice.manufacturerId).then((data) => {
-        updatedList[index]['avlQuantity'] = data.floatKey;
-        updatedList[index]['cmlNumber'] = data.stringValue;
-        updatedList[index]['rate'] = data.floatKey2;
-        updatedList[index]['unit'] = data.stringValue2;
+        updatedList[index].itemLblValList = data || [];
       });
     }
 
@@ -56,35 +67,61 @@ const SubTableForm = ({ invoice, setInvoice, tableTitle }) => {
       updatedList[index].total = updatedList[index].quantity * updatedList[index].rate;
     }
 
-    setItemDetailsList(updatedList);
-    setInvoice({ ...invoice, invoiceItemList: updatedList });
+    setPOItemList(updatedList);
+    setPurchase({ ...purchase, purchaseOrderItemsList: updatedList });
   };
 
   const addItemRow = () => {
     const newList = [
-      ...invoiceItemList,
-      { id: -1, categoryId: 0, cmlNumber: '', avlQuantity: 0, rate: 0, quantity: 0, unit: '', total: 0, itemId: '', itemList: [] }
+      ...purchaseOrderItemsList,
+      { 
+        itemId: null,
+
+        manufacturerId: -1,
+
+        quantity: 0,
+
+        rate: 0,
+
+        categoryId: -1,
+
+        cmlNumber: '',
+
+        totalAmount: 0,
+
+        purchaseOrderId: null,
+        
+        itemLblValList: [] 
+      }
     ];
-    setItemDetailsList(newList);
-    setInvoice({ ...invoice, invoiceItemList: newList });
+    setPOItemList(newList);
+    setPurchase({ ...purchase, purchaseOrderItemsList: newList });
   };
 
   const removeItemRow = (index) => {
-    const updatedList = invoiceItemList.filter((_, i) => i !== index);
-    setItemDetailsList(updatedList);
-    setInvoice({ ...invoice, invoiceItemList: updatedList });
+    const updatedList = purchaseOrderItemsList.filter((_, i) => i !== index);
+    setPOItemList(updatedList);
+    setPurchase({ ...purchase, purchaseOrderItemsList: updatedList });
   };
 
   useEffect(() => {
-    if (invoice?.invoiceItemList?.length) {
-      setItemDetailsList(invoice.invoiceItemList);
+    if (purchase?.purchaseOrderItemsList?.length) {
+      setPOItemList(purchase.purchaseOrderItemsList);
     }
-  }, [invoice]);
+  }, [purchase]);
 
   useEffect(() => {
     fetchCategoryList().then((data) => {
       setCategoryList(data || []);
     });
+
+    fetchUnitList().then((data) => {
+      setUnitList(data || []);
+    });
+
+    fetchManufacturerList().then((data) => {
+      setManufacturerList(data || []);
+    });    
   }, []);
 
   return (
@@ -95,26 +132,26 @@ const SubTableForm = ({ invoice, setInvoice, tableTitle }) => {
             <Table sx={{ borderCollapse: 'collapse', borderSpacing: 0, '& td, & th': { padding: '8px 2px', } }}>
               <TableHead sx={{ backgroundColor: 'primary.light' }}>
                 <TableRow>
-                  <TableCell sx={{ fontWeight: 600, minWidth: 200 } }>Category</TableCell>
-                  <TableCell sx={{ fontWeight: 600, minWidth: 200 }}>Item</TableCell>
-                  <TableCell sx={{ fontWeight: 600 }}>Avl. Qty</TableCell>
+                  <TableCell sx={{ fontWeight: 600, minWidth: 150 } }>Category</TableCell>
+                  <TableCell sx={{ fontWeight: 600, minWidth: 150 }}>Item</TableCell>
+                  <TableCell sx={{ fontWeight: 600, minWidth: 150 }}>Manufacturer</TableCell>
                   <TableCell sx={{ fontWeight: 600 }}>CML No.</TableCell>
                   <TableCell sx={{ fontWeight: 600 }}>Qty</TableCell>
-                  <TableCell sx={{ fontWeight: 600 }}>Unit</TableCell>
                   <TableCell sx={{ fontWeight: 600 }}>Rate</TableCell>
                   <TableCell sx={{ fontWeight: 600 }}>Total</TableCell>
                   <TableCell align="center" sx={{ fontWeight: 600 }}>Action</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
-                {invoiceItemList.map((row, index) => (
+                {purchaseOrderItemsList.map((row, index) => (
                   <TableRow key={index} hover>
                     <TableCell>
                       <TextField
                         select
                         fullWidth
+                        label="Category"
                         size="small"
-                        value={row.categoryId || 0}
+                        value={row.categoryId || ''}
                         onChange={(e) => handleItemChange(index, 'categoryId', e.target.value)}
                       >
                         {categoryList.map((cat) => (
@@ -128,11 +165,12 @@ const SubTableForm = ({ invoice, setInvoice, tableTitle }) => {
                       <TextField
                         select
                         fullWidth
+                        label="Item"
                         size="small"
                         value={row.itemId || ''}
                         onChange={(e) => handleItemChange(index, 'itemId', e.target.value)}
                       >
-                        {row.itemList.map((item) => (
+                        {row.itemLblValList.map((item) => (
                           <MenuItem key={item.intKey} value={item.intKey}>
                             {item.stringValue}
                           </MenuItem>
@@ -140,11 +178,25 @@ const SubTableForm = ({ invoice, setInvoice, tableTitle }) => {
                       </TextField>
                     </TableCell>
                     <TableCell>
-                      <TextField fullWidth size="small" value={row.avlQuantity} InputProps={{ readOnly: true }} />
-                    </TableCell>
+                      <TextField
+                        select
+                        fullWidth
+                        label="Manufacturer"
+                        size="small"
+                        value={row.manufacturerId || ''}
+                        onChange={(e) => handleItemChange(index, 'manufacturerId', e.target.value)}
+                      >
+                        {manufacturerList.map((man) => (
+                          <MenuItem key={man.id} value={man.id}>
+                            {man.nameEn}
+                          </MenuItem>
+                        ))}
+                      </TextField>
+                    </TableCell>                    
                     <TableCell>
                       <TextField
                         fullWidth
+                        label="CML"
                         size="small"
                         value={row.cmlNumber}
                         onChange={(e) => handleItemChange(index, 'cmlNumber', e.target.value)}
@@ -153,6 +205,7 @@ const SubTableForm = ({ invoice, setInvoice, tableTitle }) => {
                     <TableCell>
                       <TextField
                         fullWidth
+                        label="QTY"
                         size="small"
                         type="number"
                         value={row.quantity}
@@ -163,14 +216,7 @@ const SubTableForm = ({ invoice, setInvoice, tableTitle }) => {
                     <TableCell>
                       <TextField
                         fullWidth
-                        size="small"
-                        value={row.unit}
-                        onChange={(e) => handleItemChange(index, 'unit', e.target.value)}
-                      />
-                    </TableCell>
-                    <TableCell>
-                      <TextField
-                        fullWidth
+                        label="Rate"
                         size="small"
                         type="number"
                         value={row.rate}
@@ -181,6 +227,7 @@ const SubTableForm = ({ invoice, setInvoice, tableTitle }) => {
                     <TableCell>
                       <TextField
                         fullWidth
+                        label="Total"
                         size="small"
                         value={row.total}
                         InputProps={{ readOnly: true }}
@@ -191,7 +238,7 @@ const SubTableForm = ({ invoice, setInvoice, tableTitle }) => {
                       <IconButton
                         color="error"
                         onClick={() => removeItemRow(index)}
-                        disabled={invoiceItemList.length === 1}
+                        disabled={purchaseOrderItemsList.length === 1}
                       >
                         <Delete />
                       </IconButton>

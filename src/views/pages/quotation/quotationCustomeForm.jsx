@@ -7,7 +7,7 @@ import {
   Button,
 } from '@mui/material';
 import MainCard from '../../../ui-component/cards/MainCard';
-import SubTableForm from './InvoiceSubTableForm';
+import SubTableForm from './quotationSubTableForm';
 import SimCardDownloadIcon from '@mui/icons-material/SimCardDownload';
 import { generateInvoice } from '../../../api/invoice-apis';
 import Loader from '../../../ui-component/Loader';
@@ -21,7 +21,7 @@ const CustomForm = ({ onBack, invoice }) => {
     const handleGenerateInvoice = async(e) => {
       e.preventDefault();
       setLoading(true);
-      generateInvoice(invoice.id, "invoice");
+      generateInvoice(invoice.id, "quotation");
       setLoading(false);
     }
 
@@ -104,7 +104,7 @@ const CustomForm = ({ onBack, invoice }) => {
                 fullWidth
                 label="District"
                 name="districtName"
-                value={formData.districtName}
+                value={formData.districtNameEn}
                 InputProps={{ readonly: true }}
                 required
               />
@@ -115,7 +115,7 @@ const CustomForm = ({ onBack, invoice }) => {
                 fullWidth
                 label="Tehsil"
                 name="tehsilName"
-                value={formData.tehsilName}
+                value={formData.tehsilNameEn}
                 InputProps={{ readonly: true }}
                 required
               />
@@ -126,7 +126,7 @@ const CustomForm = ({ onBack, invoice }) => {
                 fullWidth
                 label="Manufacturer"
                 name="manufacturer"
-                value={formData.manufacturerName}
+                value={formData.manufacturerNameEn}
                 InputProps={{ readonly: true }}
                 required
               />

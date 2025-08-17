@@ -5,8 +5,7 @@ import { Button } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 import CustomTable from '../../../ui-component/components/CustomeTable';
 import { fetchItemList, fetchItemDetails } from '../../../api/item-apis';
-import { fetchInvoiceList } from '../../../api/invoice-apis';
-import { fetchQuotationList } from '../../../api/quotation-apis';
+import { fetchQuotationDetails, fetchQuotationList } from '../../../api/quotation-apis';
 import useConfig from '../../../hooks/useConfig';
 
 export default function Table({ onCreate, onEdit }){
@@ -33,7 +32,7 @@ export default function Table({ onCreate, onEdit }){
           sortable: false,
           renderCell: (params) => {
           const handleClick = () => {
-              const item = fetchItemDetails(`${params.row.id}`);
+              const item = fetchQuotationDetails(`${params.row.id}`);
               if(item != null){
                   item.then(data => {
                       onEdit(data);
