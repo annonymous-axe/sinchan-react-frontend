@@ -15,18 +15,37 @@ import SubTableForm from './InvoiceSubTableForm';
 import { fetchManufacturerList } from '../../../api/manufacturer-apis';
 import { saveInvoice } from '../../../api/invoice-apis';
 import { saveQuotation } from '../../../api/quotation-apis';
+import translateText from '../../../api/translate';
 
 const CustomForm = ({ onBack, onGenerateInvoice, farmer, showInvoiceItemList }) => {
 
     // to handle form data
     const [formData, setFormData] = useState(farmer);
 
-    const handleChange = (e) => {
+    const handleChange = async (e) => {
         setFormData((prev) => ({
-        ...prev,
-        [e.target.name]: e.target.value
+          ...prev,
+          [e.target.name]: e.target.value
         }));
     };
+
+    const translateTextToHindi = async(e) => {
+
+      if(e.target.value.length == 1){
+        setFormData((prev) => ({
+          ...prev,
+          farmerNameMh: ''
+        }))
+
+        return;
+      }
+
+      const data = await translateText(e.target.value, 'en', 'hi');
+        setFormData((prev) => ({
+          ...prev,
+          farmerNameMh: data.translatedText
+        }))
+    }    
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -135,10 +154,24 @@ const CustomForm = ({ onBack, onGenerateInvoice, farmer, showInvoiceItemList }) 
               label="Farmer Name"
               name="farmerNameEn"
               value={formData.farmerNameEn}
-              onChange={handleChange}
+              onChange={(e) => {
+                handleChange(e);
+                translateTextToHindi(e);
+              }}
               required
             />
           </Grid>
+
+          <Grid item xs={12} sm={6}>
+            <TextField
+              fullWidth
+              label="शेतकरीचे नाव"
+              name="farmerNameMh"
+              value={formData.farmerNameMh}
+              onChange={handleChange}
+              required
+            />
+          </Grid>          
 
           <Grid item xs={12} sm={6}>
             <TextField
@@ -257,9 +290,11 @@ const CustomForm = ({ onBack, onGenerateInvoice, farmer, showInvoiceItemList }) 
                 ))}
               </TextField>
             </Grid> 
-          }             
+          }
 
-          <Grid item xs={12}>
+          <Grid items xs={12} />
+
+          <Grid item xs={6}>
             <TextField
               fullWidth
               label="Address"
@@ -269,7 +304,19 @@ const CustomForm = ({ onBack, onGenerateInvoice, farmer, showInvoiceItemList }) 
               multiline
               rows={4}
             />
-          </Grid>      
+          </Grid>
+          
+          <Grid item xs={6}>
+            <TextField
+              fullWidth
+              label="पत्ता"
+              name="addressMh"
+              value={formData.addressMh}
+              onChange={handleChange}
+              multiline
+              rows={4}
+            />
+          </Grid>                
 
 
           {showInvoiceItemList &&
