@@ -21,11 +21,11 @@ export default function Footer() {
       <Typography variant="caption">
         &copy; All rights reserved{' '}
         <Typography component={Link} href="" underline="hover" target="_blank" color="secondary.main">
-          annonymous-axel
+          Nextech
         </Typography>
       </Typography>
       <Stack direction="row" sx={{ gap: 1.5, alignItems: 'center', justifyContent: 'space-between' }}>
-        <Link
+        {/* <Link
           component={RouterLink}
           to="https://www.linkedin.com/in/kamlesh-baviskar"
           underline="hover"
@@ -44,7 +44,7 @@ export default function Footer() {
           color="text.primary"
         >
           <GitHubIcon />
-        </Link>
+        </Link> */}
       </Stack>
     </Stack>
   );
