@@ -1,0 +1,54 @@
+{
+    "app": {
+        "create": "Create",
+        "edit": "Edit",
+        "back": "Back",
+        "submit": "Submit",
+        "update": "Update",
+        "delete": "Delete",
+        "action": "Action",
+        "addRow": "Add Row",
+        "download": "Download",
+        "generateInvoiceQuation": "Generate Invoice/Quotation",
+        "generateInvoice": "Generate Invoice",
+        "generateQuotation": "Generate Quotation",
+        "itemListTitle": "Item List",
+        "masters": {
+            "Farmers": "Farmer"
+        },
+        "title": {
+            "id": "ID",
+            "category": "Category Name",
+            "manufacturer": "Manufacturer Name",
+            "farmerName": "Farmer Name",
+            "item": "Item Name",
+            "avlQty": "Avl. Qty",
+            "cmlNo": "CML No.",
+            "qty": "Qty",
+            "unit": "Unit",
+            "rate": "Rate",
+            "total": "Total",
+            "email": "Email",
+            "contactNo": "Contact No",
+
+            "poNumber": "PO Number",
+            "supplierName": "Supplier Name",
+            "purchaseDate": "Purchase Date",
+            "billNumber": "Bill Number",
+
+            "farmerListTitle": "Farmer List",
+            "categoryListTitle": "Category List",
+            "manufacturerListTitle": "Manufacturer List",
+            "itemListTitle": "Item List",
+            "pOListTitle": "Purchase Order List",
+            "invoiceListTitle": "Invoice List",
+
+            "itemTitle": "Item Form",
+            "manufacturerFormTitle": "Manufacturer Form",
+            "farmerFormTitle": "Farmer Form",
+            "pOFormTitle": "Purchase Order Form",
+            "invoiceFormTitle": "Invoice Form"
+            
+        }
+    }
+}

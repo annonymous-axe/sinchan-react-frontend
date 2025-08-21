@@ -1,0 +1,54 @@
+{
+    "app": {
+        "create": "नविन",
+        "edit": "संपादित करा",
+        "back": "माघे",
+        "submit": "सादर करा",
+        "update": "अद्यतन करा",
+        "delete": "अनुक्रमणिका",
+        "action": "क्रिया",
+        "addRow": "ओळ जोडा",
+        "download": "डाउनलोड",
+        "generateInvoiceQuation": "बिल/उद्धरण उत्पादन करा",
+        "generateInvoice": "बिल उत्पादन करा",
+        "generateQuotation": "उद्धरण उत्पादन करा",
+        "itemListTitle": "वस्तुंची यादी",        
+        "masters": {
+            "Farmers": "शेतकरी"
+        },
+        "title": {
+            "id": "आइडी",
+            "category": "श्रेणीचे नाव",
+            "manufacturer": "निर्माताचे नाव",
+            "farmerName": "शेतकऱ्यांचे नाव",
+            "item": "वस्तुचे नाव",
+            "avlQty": "उपलब्ध प्रमाण",
+            "cmlNo": "सिएमएल न.",
+            "qty": "प्रमाण",
+            "unit": "युनिट",
+            "rate": "दर",
+            "total": "एकूण",
+            "email": "एमैल",
+            "contactNo": "फोन न.",
+
+            "poNumber": "PO न.",
+            "supplierName": "पुरवठादारचे नाव",
+            "purchaseDate": "खरेदी तारीख",
+            "billNumber": "बिल क्रमांक",            
+
+            "farmerListTitle": "शेतकऱ्यांची यादी",
+            "categoryListTitle": "श्रेणीची यादी",
+            "manufacturerListTitle": "निर्माताची यादी",
+            "itemListTitle": "वस्तुंची यादी",
+            "pOListTitle": "खरेदीची यादी",
+            "invoiceListTitle": "बिलची यादी",
+
+            "itemFormTitle": "वस्तुचे फॉर्म",
+            "manufacturerFormTitle": "निर्माताचे फॉर्म",
+            "farmerFormTitle": "कृषि कर्मचारी फॉर्म",
+            "pOFormTitle": "खरेदी फॉर्म",
+            "invoiceFormTitle": "बिल फॉर्म"
+            
+        }        
+    }
+}
