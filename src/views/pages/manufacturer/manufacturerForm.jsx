@@ -7,6 +7,7 @@ import {
 } from '@mui/material';
 import MainCard from '../../../ui-component/cards/MainCard';
 import { saveManufacturer, updateManufacturer, deleteManufacturer } from '../../../api/manufacturer-apis';
+import Sanscript from '@indic-transliteration/sanscript';
 
 const CustomForm = ({ onBack, manufacturer }) => {
   const [formData, setFormData] = useState(manufacturer);
@@ -16,6 +17,14 @@ const CustomForm = ({ onBack, manufacturer }) => {
       ...prev,
       [e.target.name]: e.target.value
     }));
+
+    if(e.target.name == 'nameEn'){
+      const opts = { syncope: true };
+      setFormData((prev) => ({
+        ...prev,
+        nameMh: Sanscript.t(e.target.value, "itrans", "devanagari", opts)
+      }));
+    }    
   };
 
   const handleSubmit = async (e) => {
@@ -51,6 +60,17 @@ const CustomForm = ({ onBack, manufacturer }) => {
               required
             />
           </Grid>
+
+          <Grid item xs={12} sm={6}>
+            <TextField
+              fullWidth
+              label="निर्माताचे नाव"
+              name="nameMh"
+              value={formData.nameMh}
+              onChange={handleChange}
+              required
+            />
+          </Grid>          
 
           {/* Action Buttons */}
           <Grid item xs={12} display="flex" justifyContent="flex-end" gap={2}>

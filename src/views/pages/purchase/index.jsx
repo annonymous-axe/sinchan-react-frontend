@@ -13,7 +13,7 @@ export default function purchase(){
 
     supplierNameEn: '',
 
-    supplierNameMh: '',
+    supplierNameMr: '',
 
     purchaseDate: null,
 

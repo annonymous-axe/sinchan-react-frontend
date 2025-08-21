@@ -18,8 +18,11 @@ import MainCard from '../../../ui-component/cards/MainCard';
 import { fetchCategoryList } from '../../../api/category-apis';
 import { fetchManufacturerList } from '../../../api/manufacturer-apis';
 import { saveItem, updateItem, deleteItem, fetchUnitList } from '../../../api/item-apis';
+import useConfig from '../../../hooks/useConfig';
+import Sanscript from '@indic-transliteration/sanscript';
 
 const CustomForm = ({ onBack, item }) => {
+  const { lang } = useConfig();
   const [formData, setFormData] = useState(item);
   const [categoryList, setCategoryList] = useState([]);
   const [manufacturerList, setManufacturerList] = useState([]);
@@ -42,6 +45,14 @@ const CustomForm = ({ onBack, item }) => {
       ...prev,
       [e.target.name]: e.target.value
     }));
+
+    if(e.target.name == 'itemNameEn'){
+      const opts = { syncope: true };
+      setFormData((prev) => ({
+        ...prev,
+        itemNameMh: Sanscript.t(e.target.value, "itrans", "devanagari", opts)
+      }));
+    }    
   };
 
   // Handle change for subtable
@@ -121,6 +132,17 @@ const CustomForm = ({ onBack, item }) => {
 
           <Grid item xs={12} sm={6}>
             <TextField
+              fullWidth
+              label="सामग्रीचे नाव"
+              name="itemNameMh"
+              value={formData.itemNameMh}
+              onChange={handleChange}
+              required
+            />
+          </Grid>          
+
+          <Grid item xs={12} sm={6}>
+            <TextField
               select
               fullWidth
               label="Category"
@@ -131,7 +153,7 @@ const CustomForm = ({ onBack, item }) => {
             >
               {categoryList.map((category) => (
                 <MenuItem key={category.id} value={category.id}>
-                  {category.nameEn}
+                  {lang ? category.nameEn : category.nameMh}
                 </MenuItem>
               ))}
             </TextField>
@@ -149,7 +171,7 @@ const CustomForm = ({ onBack, item }) => {
             >
               {unitList.map((unit) => (
                 <MenuItem key={unit.intKey} value={unit.intKey}>
-                  {unit.stringValue}
+                  {lang ? unit.stringValue : unit.stringValue2}
                 </MenuItem>
               ))}            
             </TextField>
@@ -195,7 +217,7 @@ const CustomForm = ({ onBack, item }) => {
                           >
                             {manufacturerList.map((m) => (
                               <MenuItem key={m.id} value={m.id}>
-                                {m.nameEn}
+                                {lang ? m.nameEn : m.nameMh}
                               </MenuItem>
                             ))}
                           </TextField>

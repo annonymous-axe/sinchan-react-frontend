@@ -16,7 +16,7 @@ export default function FarmerTable({ onCreate, onEdit }){
     var supplierNameFied = 'supplierNameEn';
 
     if(lang){
-      supplierNameFied = 'supplierNameMh';
+      supplierNameFied = 'supplierNameMr';
     }
     
 

@@ -11,8 +11,12 @@ import SubTableForm from './InvoiceSubTableForm';
 import SimCardDownloadIcon from '@mui/icons-material/SimCardDownload';
 import { generateInvoice } from '../../../api/invoice-apis';
 import Loader from '../../../ui-component/Loader';
+import useConfig from '../../../hooks/useConfig';
 
 const CustomForm = ({ onBack, invoice }) => {
+
+    const { lang } = useConfig();
+    
 
     // to handle form data
     const [formData, setFormData] = useState(invoice);
@@ -37,11 +41,11 @@ const CustomForm = ({ onBack, invoice }) => {
                 fullWidth
                 label="Farmer Name"
                 name="farmerName"
-                value={formData.farmerNameEn}
+                value={lang ? formData.farmerNameMh : formData.farmerNameEn}
                 InputProps={{ readonly: true }}
                 required
               />
-            </Grid>
+            </Grid>           
 
             <Grid item xs={12} sm={6}>
               <TextField
@@ -59,7 +63,6 @@ const CustomForm = ({ onBack, invoice }) => {
               <TextField
                 fullWidth
                 label="Contact No."
-                name="contactNo"
                 value={formData.contactNo}
                 InputProps={{ readonly: true }}
                 required
@@ -93,7 +96,7 @@ const CustomForm = ({ onBack, invoice }) => {
                 fullWidth
                 label="Sanch"
                 name="sanch"
-                value={formData.sanch}
+                value={lang ? formData.sanch : formData.sanch}
                 InputProps={{ readonly: true }}
                 required
               />
@@ -104,7 +107,7 @@ const CustomForm = ({ onBack, invoice }) => {
                 fullWidth
                 label="District"
                 name="districtName"
-                value={formData.districtName}
+                value={lang ? formData.districtNameMh : formData.districtNameEn}
                 InputProps={{ readonly: true }}
                 required
               />
@@ -115,7 +118,7 @@ const CustomForm = ({ onBack, invoice }) => {
                 fullWidth
                 label="Tehsil"
                 name="tehsilName"
-                value={formData.tehsilName}
+                value={lang ? formData.tehsilNameMh : formData.tehsilNameEn}
                 InputProps={{ readonly: true }}
                 required
               />
@@ -125,8 +128,7 @@ const CustomForm = ({ onBack, invoice }) => {
               <TextField
                 fullWidth
                 label="Manufacturer"
-                name="manufacturer"
-                value={formData.manufacturerName}
+                value={lang ? formData.manufacturerNameMh : formData.manufacturerNameEn}
                 InputProps={{ readonly: true }}
                 required
               />
@@ -137,14 +139,14 @@ const CustomForm = ({ onBack, invoice }) => {
                 fullWidth
                 label="Address"
                 name="address"
-                value={formData.address}
+                value={lang ? formData.addressMh : formData.addressEn}
                 InputProps={{ readonly: true }}
                 multiline
                 rows={4}
               />
             </Grid>      
 
-            <SubTableForm invoice={formData} tableTitle={"Item List"}/>
+            <SubTableForm invoice={formData} tableTitle={"Item List"} lang={lang}/>
 
             {/* Buttons */}
             <Grid item xs={12} display="flex" justifyContent="flex-end" gap={2}>

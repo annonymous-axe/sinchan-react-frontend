@@ -1,5 +1,5 @@
 // src/components/CustomForm.js
-import React, { useState } from 'react';
+import { useState } from 'react';
 import {
   Box,
   Grid,
@@ -15,37 +15,37 @@ import SubTableForm from './InvoiceSubTableForm';
 import { fetchManufacturerList } from '../../../api/manufacturer-apis';
 import { saveInvoice } from '../../../api/invoice-apis';
 import { saveQuotation } from '../../../api/quotation-apis';
-import translateText from '../../../api/translate';
+import { Sanscript } from '@indic-transliteration/sanscript';
+import useConfig from '../../../hooks/useConfig';
 
 const CustomForm = ({ onBack, onGenerateInvoice, farmer, showInvoiceItemList }) => {
 
     // to handle form data
     const [formData, setFormData] = useState(farmer);
+    const { lang } = useConfig();
 
     const handleChange = async (e) => {
         setFormData((prev) => ({
           ...prev,
           [e.target.name]: e.target.value
         }));
+
+        if(e.target.name == 'farmerNameEn'){
+          const opts = { syncope: true };
+          setFormData((prev) => ({
+            ...prev,
+            farmerNameMh: Sanscript.t(e.target.value, "itrans", "devanagari", opts)
+          }));
+        }
+
+        if(e.target.name == 'addressEn'){
+          const opts = { syncope: true };
+          setFormData((prev) => ({
+            ...prev,
+            addressMh: Sanscript.t(e.target.value, "itrans", "devanagari", opts)
+          }));
+        }        
     };
-
-    const translateTextToHindi = async(e) => {
-
-      if(e.target.value.length == 1){
-        setFormData((prev) => ({
-          ...prev,
-          farmerNameMh: ''
-        }))
-
-        return;
-      }
-
-      const data = await translateText(e.target.value, 'en', 'hi');
-        setFormData((prev) => ({
-          ...prev,
-          farmerNameMh: data.translatedText
-        }))
-    }    
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -93,21 +93,24 @@ const CustomForm = ({ onBack, onGenerateInvoice, farmer, showInvoiceItemList }) 
     const [tehsilList, setTehsilList] = useState([
         {
             talukaId: -1,
-            talukaName: "--- Select ---"
+            talukaNameEn: "--- Select ---",
+            talukaNameMh: "--- Select ---"
         }
     ]);
 
     const [districtList, setDistrictList] = useState([
         {
             districtId: -1,
-            districtName: "--- Select ---"
+            districtNameEn: "--- Select ---",
+            districtNameMh: "--- Select ---"
         }
     ]);
 
     const [manufacturerList, setManufacturerList] = useState([
         {
             id: -1,
-            name: "--- Select ---"
+            nameEn: "--- Select ---",
+            nameMh: "--- Select ---"
         }
     ]);    
 
@@ -230,7 +233,7 @@ const CustomForm = ({ onBack, onGenerateInvoice, farmer, showInvoiceItemList }) 
             >
               {sanchList.map((option) => (
                 <MenuItem key={option.intKey} value={option.intKey}>
-                  {option.stringValue}
+                  {lang ? option.stringValue : option.stringValue2}
                 </MenuItem>
               ))}
             </TextField>
@@ -247,8 +250,8 @@ const CustomForm = ({ onBack, onGenerateInvoice, farmer, showInvoiceItemList }) 
               required
             >
               {districtList.map((district) => (
-                <MenuItem key={district.districtNameEn} value={district.districtId}>
-                  {district.districtNameEn}
+                <MenuItem key={district.districtId} value={district.districtId}>
+                  {lang ? district.districtNameEn : district.districtNameMh}
                 </MenuItem>
               ))}
             </TextField>
@@ -266,7 +269,7 @@ const CustomForm = ({ onBack, onGenerateInvoice, farmer, showInvoiceItemList }) 
             >
               {tehsilList.map((tehsil) => (
                 <MenuItem key={tehsil.tehsilNameEn} value={tehsil.tehsilId}>
-                  {tehsil.tehsilNameEn}
+                  {lang ? tehsil.tehsilNameEn : tehsil.tehsilNameMh}
                 </MenuItem>
               ))}
             </TextField>
@@ -285,7 +288,7 @@ const CustomForm = ({ onBack, onGenerateInvoice, farmer, showInvoiceItemList }) 
               >
                 {manufacturerList.map((man) => (
                   <MenuItem key={man.id} value={man.id}>
-                    {man.nameEn}
+                    {lang ? man.nameEn : man.nameMh}
                   </MenuItem>
                 ))}
               </TextField>
@@ -320,7 +323,7 @@ const CustomForm = ({ onBack, onGenerateInvoice, farmer, showInvoiceItemList }) 
 
 
           {showInvoiceItemList &&
-            <SubTableForm invoice={formData} setInvoice={setFormData} tableTitle={"Invoice List"}/>
+            <SubTableForm invoice={formData} setInvoice={setFormData} tableTitle={"Item List"}/>
           }
 
           {/* Buttons */}

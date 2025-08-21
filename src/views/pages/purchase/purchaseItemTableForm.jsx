@@ -20,7 +20,7 @@ import { fetchCategoryList } from '../../../api/category-apis';
 import { fetchItemListFromCategoryId, fetchItemDetailsFromItemId, fetchUnitList } from '../../../api/item-apis';
 import { fetchManufacturerList } from '../../../api/manufacturer-apis';
 
-const SubTableForm = ({ purchase, setPurchase, tableTitle }) => {
+const SubTableForm = ({ purchase, setPurchase, tableTitle, lang }) => {
   const [categoryList, setCategoryList] = useState([]);
   const [unitList, setUnitList] = useState([]);
   const [manufacturerList, setManufacturerList] = useState([]);
@@ -156,7 +156,7 @@ const SubTableForm = ({ purchase, setPurchase, tableTitle }) => {
                       >
                         {categoryList.map((cat) => (
                           <MenuItem key={cat.id} value={cat.id}>
-                            {cat.nameEn}
+                            {lang ? cat.nameMh : cat.nameEn}
                           </MenuItem>
                         ))}
                       </TextField>
@@ -172,7 +172,7 @@ const SubTableForm = ({ purchase, setPurchase, tableTitle }) => {
                       >
                         {row.itemLblValList.map((item) => (
                           <MenuItem key={item.intKey} value={item.intKey}>
-                            {item.stringValue}
+                            {lang ? item.stringValue2 : item.stringValue}
                           </MenuItem>
                         ))}
                       </TextField>
@@ -188,7 +188,7 @@ const SubTableForm = ({ purchase, setPurchase, tableTitle }) => {
                       >
                         {manufacturerList.map((man) => (
                           <MenuItem key={man.id} value={man.id}>
-                            {man.nameEn}
+                            {lang ? man.nameMh : man.nameEn}
                           </MenuItem>
                         ))}
                       </TextField>

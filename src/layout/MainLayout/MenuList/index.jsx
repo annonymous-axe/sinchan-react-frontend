@@ -10,10 +10,14 @@ import NavGroup from './NavGroup';
 import menuItems from 'menu-items';
 
 import { useGetMenuMaster } from 'api/menu';
+import { useTranslation } from 'react-i18next';
 
 // ==============================|| SIDEBAR MENU LIST ||============================== //
 
 function MenuList() {
+
+  const{ t } = useTranslation();
+
   const { menuMaster } = useGetMenuMaster();
   const drawerOpen = menuMaster.isDashboardDrawerOpened;
 

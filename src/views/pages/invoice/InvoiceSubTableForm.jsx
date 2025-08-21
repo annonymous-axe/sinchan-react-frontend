@@ -12,7 +12,7 @@ import {
 } from '@mui/material';
 import MainCard from '../../../ui-component/cards/MainCard';
 
-const SubTableForm = ({ invoice, tableTitle }) => {
+const SubTableForm = ({ invoice, tableTitle, lang }) => {
 
   return (
     <Grid item xs={12}>
@@ -38,7 +38,7 @@ const SubTableForm = ({ invoice, tableTitle }) => {
                       <TextField
                         fullWidth
                         size="small"
-                        value={row.categoryName}
+                        value={lang ? row.categoryNameMr : row.categoryNameEn}
                         InputProps={{ readOnly: true }}
                       />
                     </TableCell>
@@ -46,7 +46,7 @@ const SubTableForm = ({ invoice, tableTitle }) => {
                       <TextField
                         fullWidth
                         size="small"
-                        value={row.itemName}
+                        value={lang ? row.itemNameMr : row.itemNameEn}
                         InputProps={{ readOnly: true }}
                       />
                     </TableCell>

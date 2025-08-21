@@ -33,6 +33,7 @@ import useConfig from 'hooks/useConfig';
 import User1 from 'assets/images/users/user-round.svg';
 import { IconLogout, IconSearch, IconSettings, IconUser } from '@tabler/icons-react';
 import { useAuth } from '../../../../contexts/authContext';
+import i18n from '../../../../i18n';
 
 // ==============================|| PROFILE MENU ||============================== //
 
@@ -74,6 +75,9 @@ export default function ProfileSection() {
 
     setSdm(e.target.checked);
     onChangLanguage(e.target.checked)
+    if(e.target.checked){
+      i18n.changeLanguage("mr");
+    }
 
   }
 

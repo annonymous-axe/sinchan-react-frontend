@@ -19,7 +19,6 @@ export default function FarmerTable({ onCreate, onEdit }){
       farmerNameFied = 'farmerNameMh';
     }
     
-
     const columns = [
       { field: 'id', headerName: 'ID', width: 90 },
       { field: farmerNameFied, headerName: 'Name', flex: 1 },
