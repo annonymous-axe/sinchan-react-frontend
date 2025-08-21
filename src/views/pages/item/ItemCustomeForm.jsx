@@ -21,7 +21,7 @@ import { saveItem, updateItem, deleteItem, fetchUnitList } from '../../../api/it
 import useConfig from '../../../hooks/useConfig';
 import Sanscript from '@indic-transliteration/sanscript';
 
-const CustomForm = ({ onBack, item }) => {
+const CustomForm = ({ onBack, item, translate }) => {
   const { lang } = useConfig();
   const [formData, setFormData] = useState(item);
   const [categoryList, setCategoryList] = useState([]);
@@ -115,7 +115,7 @@ const CustomForm = ({ onBack, item }) => {
   }, []);
 
   return (
-    <MainCard title="Item Form">
+    <MainCard title={translate("app.title.itemFormTitle")}>
       <Box component="form" onSubmit={handleSubmit} noValidate>
         <Grid container spacing={3}>
           {/* Main Form Fields */}
@@ -190,16 +190,16 @@ const CustomForm = ({ onBack, item }) => {
 
           {/* Subtable */}
           <Grid item xs={12}>
-            <MainCard title="Item List" content={false}>
+            <MainCard title={translate("app.title.itemListTitle")} content={false}>
               <Paper variant="outlined" sx={{ overflowX: 'auto' }}>
                 <Table>
                   <TableHead>
                     <TableRow>
-                      <TableCell>Manufacturer</TableCell>
-                      <TableCell>CML Number</TableCell>
-                      <TableCell>Quantity</TableCell>
-                      <TableCell>Rate</TableCell>
-                      <TableCell align="center">Action</TableCell>
+                      <TableCell>{translate("app.title.manufacturer")}</TableCell>
+                      <TableCell>{translate("app.title.cmlNo")}</TableCell>
+                      <TableCell>{translate("app.title.qty")}</TableCell>
+                      <TableCell>{translate("app.title.rate")}</TableCell>
+                      <TableCell align="center">{translate("app.action")}</TableCell>
                     </TableRow>
                   </TableHead>
                   <TableBody>
@@ -272,7 +272,7 @@ const CustomForm = ({ onBack, item }) => {
                           variant="outlined"
                           onClick={addItemRow}
                         >
-                          Add Row
+                          {translate("app.addRow")}
                         </Button>
                       </TableCell>
                     </TableRow>
@@ -285,19 +285,19 @@ const CustomForm = ({ onBack, item }) => {
           {/* Action Buttons */}
           <Grid item xs={12} display="flex" justifyContent="flex-end" gap={2}>
             <Button variant="outlined" color="secondary" onClick={onBack}>
-              Back
+              {translate("app.back")}
             </Button>
             {formData.id === '' ? (
               <Button type="submit" variant="contained" color="primary">
-                Submit
+                {translate("app.submit")}
               </Button>
             ) : (
               <>
                 <Button variant="contained" color="primary" onClick={handleUpdateItem}>
-                  Update
+                  {translate("app.update")}
                 </Button>
                 <Button variant="contained" color="error" onClick={handleDeleteItem}>
-                  Delete
+                  {translate("app.delete")}
                 </Button>
               </>
             )}

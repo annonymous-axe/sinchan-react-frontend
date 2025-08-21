@@ -18,7 +18,7 @@ import { saveQuotation } from '../../../api/quotation-apis';
 import { Sanscript } from '@indic-transliteration/sanscript';
 import useConfig from '../../../hooks/useConfig';
 
-const CustomForm = ({ onBack, onGenerateInvoice, farmer, showInvoiceItemList }) => {
+const CustomForm = ({ onBack, onGenerateInvoice, farmer, showInvoiceItemList, translate }) => {
 
     // to handle form data
     const [formData, setFormData] = useState(farmer);
@@ -147,7 +147,7 @@ const CustomForm = ({ onBack, onGenerateInvoice, farmer, showInvoiceItemList }) 
 
 
   return (
-    <MainCard title="Farmer Form">
+    <MainCard title={translate("app.title.farmerFormTitle")}>
       <Box component="form" onSubmit={handleSubmit} noValidate>
         <Grid container spacing={3}>
 
@@ -323,7 +323,7 @@ const CustomForm = ({ onBack, onGenerateInvoice, farmer, showInvoiceItemList }) 
 
 
           {showInvoiceItemList &&
-            <SubTableForm invoice={formData} setInvoice={setFormData} tableTitle={"Item List"}/>
+            <SubTableForm invoice={formData} setInvoice={setFormData} tableTitle={translate("app.itemListTitle")} translate={translate}/>
           }
 
           {/* Buttons */}
@@ -333,23 +333,23 @@ const CustomForm = ({ onBack, onGenerateInvoice, farmer, showInvoiceItemList }) 
               color="secondary"
               onClick={onBack}
             >
-              Back
+              {translate("app.back")}
             </Button>
             {formData.id=='' &&
               <Button type="submit" variant="contained" color="primary">
-                Submit
+                {translate("app.submit")}
               </Button>            
             }
             {formData.id!='' && !showInvoiceItemList &&
               <>
               <Button variant="contained" color="primary" onClick={handleUdateFarmer}>
-                Update
+                {translate("app.update")}
               </Button>
               <Button variant="contained" color="error" onClick={handleDeleteFarmer}>
-                Delete
+                {translate("app.delete")}
               </Button>
               <Button variant="contained" color="success" onClick={handleGenerateInvoice}>
-                Generate Invoice/Quotation
+                {translate("app.generateInvoiceQuation")}
               </Button>              
               </>
             }
@@ -357,10 +357,10 @@ const CustomForm = ({ onBack, onGenerateInvoice, farmer, showInvoiceItemList }) 
             {formData.id!='' && showInvoiceItemList &&
               <>
                 <Button variant="outlined" color="primary" onClick={generateInvoice}>
-                  Generate Invoice
+                  {translate("app.generateInvoice")}
                 </Button>
                 <Button variant="outlined" color="primary" onClick={generateQuotation}>
-                  Generate Quotation
+                  {translate("app.generateQuotation")}
                 </Button>
               </>
             }            

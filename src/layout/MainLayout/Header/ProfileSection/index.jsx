@@ -77,6 +77,8 @@ export default function ProfileSection() {
     onChangLanguage(e.target.checked)
     if(e.target.checked){
       i18n.changeLanguage("mr");
+    }else{
+      i18n.changeLanguage("en");
     }
 
   }

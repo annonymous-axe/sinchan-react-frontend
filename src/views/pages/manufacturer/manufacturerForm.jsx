@@ -9,7 +9,7 @@ import MainCard from '../../../ui-component/cards/MainCard';
 import { saveManufacturer, updateManufacturer, deleteManufacturer } from '../../../api/manufacturer-apis';
 import Sanscript from '@indic-transliteration/sanscript';
 
-const CustomForm = ({ onBack, manufacturer }) => {
+const CustomForm = ({ onBack, manufacturer, translate }) => {
   const [formData, setFormData] = useState(manufacturer);
 
   const handleChange = (e) => {
@@ -46,7 +46,7 @@ const CustomForm = ({ onBack, manufacturer }) => {
   };
 
   return (
-    <MainCard title="Manufacturer Form">
+    <MainCard title={translate("app.title.manufacturerFormTitle")}>
       <Box component="form" onSubmit={handleSubmit} noValidate>
         <Grid container spacing={3}>
           {/* Main Form Fields */}
@@ -75,19 +75,19 @@ const CustomForm = ({ onBack, manufacturer }) => {
           {/* Action Buttons */}
           <Grid item xs={12} display="flex" justifyContent="flex-end" gap={2}>
             <Button variant="outlined" color="secondary" onClick={onBack}>
-              Back
+              {translate("app.back")}
             </Button>
             {formData.id === '' ? (
               <Button type="submit" variant="contained" color="primary">
-                Submit
+                {translate("app.submit")}
               </Button>
             ) : (
               <>
                 <Button variant="contained" color="primary" onClick={handleUpdateItem}>
-                  Update
+                  {translate("app.update")}
                 </Button>
                 <Button variant="contained" color="error" onClick={handleDeleteItem}>
-                  Delete
+                  {translate("app.delete")}
                 </Button>
               </>
             )}

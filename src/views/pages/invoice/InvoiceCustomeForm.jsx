@@ -13,7 +13,7 @@ import { generateInvoice } from '../../../api/invoice-apis';
 import Loader from '../../../ui-component/Loader';
 import useConfig from '../../../hooks/useConfig';
 
-const CustomForm = ({ onBack, invoice }) => {
+const CustomForm = ({ onBack, invoice, translate }) => {
 
     const { lang } = useConfig();
     
@@ -32,7 +32,7 @@ const CustomForm = ({ onBack, invoice }) => {
   return (
     <>
       {loading && <Loader />}
-      <MainCard title="Invoice Form">
+      <MainCard title={translate("app.title.invoiceFormTitle")}>
         <Box component="form">
           <Grid container spacing={3}>
 
@@ -146,7 +146,7 @@ const CustomForm = ({ onBack, invoice }) => {
               />
             </Grid>      
 
-            <SubTableForm invoice={formData} tableTitle={"Item List"} lang={lang}/>
+            <SubTableForm invoice={formData} tableTitle={translate("app.itemListTitle")} lang={lang} translate={translate}/>
 
             {/* Buttons */}
             <Grid item xs={12} display="flex" justifyContent="flex-end" gap={2}>
@@ -155,7 +155,7 @@ const CustomForm = ({ onBack, invoice }) => {
                 color="secondary"
                 onClick={onBack}
               >
-                Back
+                {translate("app.back")}
               </Button>
               <Button
                 variant="contained"
@@ -163,7 +163,7 @@ const CustomForm = ({ onBack, invoice }) => {
                 onClick={handleGenerateInvoice}
                 startIcon={<SimCardDownloadIcon />}
               >
-                Download
+                {translate("app.download")}
               </Button>
             </Grid>
           </Grid>

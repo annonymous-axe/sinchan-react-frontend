@@ -15,7 +15,7 @@ import { savePurchase } from '../../../api/purchase-apis';
 import useConfig from '../../../hooks/useConfig';
 import Sanscript from '@indic-transliteration/sanscript';
 
-const CustomForm = ({ onBack, purchase }) => {
+const CustomForm = ({ onBack, purchase, translate }) => {
 
     const { lang } = useConfig();
 
@@ -46,7 +46,7 @@ const CustomForm = ({ onBack, purchase }) => {
 
 
   return (
-    <MainCard title="Farmer Form">
+    <MainCard title={translate("app.title.pOFormTitle")}>
       <Box component="form" onSubmit={handleSubmit} noValidate>
         <Grid container spacing={3}>
 
@@ -111,7 +111,7 @@ const CustomForm = ({ onBack, purchase }) => {
             />
           </Grid>
 
-          <SubTableForm purchase={formData} setPurchase={setFormData} tableTitle={"Item List"} lang={lang}/>
+          <SubTableForm purchase={formData} setPurchase={setFormData} tableTitle={translate("app.itemListTitle")} lang={lang} translate={translate} />
 
           {/* Buttons */}
           <Grid item xs={12} display="flex" justifyContent="flex-end" gap={2}>
@@ -120,11 +120,11 @@ const CustomForm = ({ onBack, purchase }) => {
               color="secondary"
               onClick={onBack}
             >
-              Back
+              {translate("app.back")}
             </Button>
             {formData.id==null &&
               <Button type="submit" variant="contained" color="primary">
-                Submit
+                {translate("app.submit")}
               </Button>            
             }
             {/* {formData.id!='' &&

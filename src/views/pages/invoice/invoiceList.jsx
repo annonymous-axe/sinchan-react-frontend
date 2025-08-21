@@ -8,7 +8,7 @@ import { fetchItemList, fetchItemDetails } from '../../../api/item-apis';
 import { fetchInvoiceList, fetchInvoiceDetails } from '../../../api/invoice-apis';
 import useConfig from '../../../hooks/useConfig';
 
-export default function Table({ onEdit }){
+export default function Table({ onEdit, translate }){
 
     const { lang } = useConfig();
 
@@ -21,13 +21,13 @@ export default function Table({ onEdit }){
     const [invoiceList, setInvoiceList] = useState([]);
 
     const columns = [
-      { field: 'id', headerName: 'ID', width: 90 },
-      { field: farmerNameFied, headerName: 'Farmer Name', flex: 1 },
-      { field: 'contactNo', headerName: 'Contact Number', flex: 1 },
-      { field: 'grandTotal', headerName: 'Grand Total', width: 150 },
+      { field: 'id', headerName: translate("app.title.id"), width: 90 },
+      { field: farmerNameFied, headerName: translate("app.title.farmerName"), flex: 1 },
+      { field: 'contactNo', headerName: translate("app.title.contactNo"), flex: 1 },
+      { field: 'grandTotal', headerName: translate("app.title.total"), width: 150 },
       {
           field: 'Action',
-          headerName: 'Action',
+          headerName: translate("app.action"),
           width: 150,
           sortable: false,
           renderCell: (params) => {
@@ -46,7 +46,7 @@ export default function Table({ onEdit }){
               color="primary"
               onClick={handleClick}
               >
-              Edit
+              {translate("app.edit")}
               </Button>
           );
           }
@@ -66,7 +66,7 @@ export default function Table({ onEdit }){
     }, []);
 
   return (
-    <MainCard title="Invoice List">
+    <MainCard title={translate("app.title.invoiceListTitle")}>
       <CustomTable rows={invoiceList} columns={columns} />
     </MainCard>
   );

@@ -1,11 +1,14 @@
 import { lazy, useState } from "react";
 
 import Loadable from '../../../ui-component/Loadable';
+import { useTranslation } from "react-i18next";
 
 const ManufacturerTable = Loadable(lazy(() => import('./manufacturerList')));
 const ManufacturerForm = Loadable(lazy(() => import('./manufacturerForm')));
 
 export default function Item(){
+
+    const {t} = useTranslation();
 
     const initialStateOfForm = {
         id: '',
@@ -34,11 +37,11 @@ export default function Item(){
     return(
         <div>
             {!showForm &&
-                <ManufacturerTable onCreate={createManufacturer} onEdit={editManufacturer} />
+                <ManufacturerTable onCreate={createManufacturer} onEdit={editManufacturer} translate={t} />
             }
             
             {showForm &&
-                <ManufacturerForm onBack={backManufacturer} manufacturer={manufacturer}/>
+                <ManufacturerForm onBack={backManufacturer} manufacturer={manufacturer} translate={t} />
             }
         </div>
     );

@@ -1,32 +1,40 @@
-import i18n from "i18next";
-import { initReactI18next } from "react-i18next";
-import HttpBackend from "i18next-http-backend";
-import LanguageDetector from "i18next-browser-languagedetector";
+import i18n from 'i18next';
+import { initReactI18next } from 'react-i18next';
+import Backend from 'i18next-http-backend';
+import LanguageDetector from 'i18next-browser-languagedetector';
+
+// Import translation files
+import translationEN from './locales/en/translation.json';
+import translationMr from './locales/mr/translation.json';
+
+// the translations
+const resources = {
+  en: {
+    translation: translationEN
+  },
+  mr: {
+    translation: translationMr
+  }
+};
 
 i18n
-    .use(HttpBackend)
-    .use(LanguageDetector)
-    .use(initReactI18next)
-    .init({
-        fallbackLng: "en",
-        supportedLng: ["en", "mr"],
-        ns: ["translation"],
-        defaultNS: "translation",
-        load: "languageOnly",
-        debug: true,
+  .use(Backend)
+  .use(LanguageDetector)
+  .use(initReactI18next)
+  .init({
+    resources,
+    fallbackLng: 'en',
+    debug: process.env.NODE_ENV === 'development',
+    
+    interpolation: {
+      escapeValue: false, // not needed for react as it escapes by default
+    },
+    
+    // Options for language detector
+    detection: {
+      order: ['querystring', 'cookie', 'localStorage', 'sessionStorage', 'navigator', 'htmlTag', 'path', 'subdomain'],
+      caches: ['localStorage', 'cookie'],
+    },
+  });
 
-        backend: {
-            loadPath: "public/locales/{{lng}}/{{ns}}.json"
-        },
-
-        detection: {
-            order: ["localStorage", "navigator", "htmlTag", "querystring", "cookies"],
-            caches: ["localStorage"]
-        },
-
-        interpolation: {
-            escapeValue: false
-        }
-    });
-
-    export default i18n;
+export default i18n;

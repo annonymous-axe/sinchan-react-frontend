@@ -8,7 +8,7 @@ import AddIcon from '@mui/icons-material/Add';
 import CustomTable from '../../../ui-component/components/CustomeTable';
 import { fetchPurchaseList, fetchPurchaseDetails } from '../../../api/purchase-apis';
 
-export default function FarmerTable({ onCreate, onEdit }){
+export default function FarmerTable({ onCreate, onEdit, translate }){
 
     const { lang } = useConfig();
     const [purchaseList, setPurchaseList] = useState([]);
@@ -21,14 +21,14 @@ export default function FarmerTable({ onCreate, onEdit }){
     
 
     const columns = [
-      { field: 'id', headerName: 'ID', width: 90 },
-      { field: 'poNumber', headerName: 'PO Number', flex: 1 },
-      { field: supplierNameFied, headerName: 'Supplier Name', flex: 1 },
-      { field: 'purchaseDate', headerName: 'Purchase Date', width: 150 },
-      { field: 'billNumber', headerName: 'Bill Number', width: 150 },
+      { field: 'id', headerName: translate("app.title.id"), width: 90 },
+      { field: 'poNumber', headerName: translate("app.title.poNumber"), flex: 1 },
+      { field: supplierNameFied, headerName: translate("app.title.supplierName"), flex: 1 },
+      { field: 'purchaseDate', headerName: translate("app.title.purchaseDate"), width: 150 },
+      { field: 'billNumber', headerName: translate("app.title.billNumber"), width: 150 },
         {
             field: 'Action',
-            headerName: 'Action',
+            headerName: translate("app.action"),
             width: 150,
             sortable: false,
             renderCell: (params) => {
@@ -47,7 +47,7 @@ export default function FarmerTable({ onCreate, onEdit }){
                 color="primary"
                 onClick={handleClick}
                 >
-                Edit
+                {translate("app.edit")}
                 </Button>
             );
             }
@@ -67,7 +67,7 @@ export default function FarmerTable({ onCreate, onEdit }){
     }, []);
 
   return (
-    <MainCard title="Purchase Order List"
+    <MainCard title={translate("app.title.pOListTitle")}
       secondary={
         <Button
           variant="contained"

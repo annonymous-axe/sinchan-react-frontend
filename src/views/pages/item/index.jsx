@@ -1,8 +1,11 @@
 import { useState } from "react";
 import ItemTable from "./itemList";
 import ItemForm from "./ItemCustomeForm";
+import { useTranslation } from "react-i18next";
 
 export default function Item(){
+
+    const {t} = useTranslation();
 
     const initialStateOfForm = {
 
@@ -37,11 +40,11 @@ export default function Item(){
     return(
         <div>
             {!showForm &&
-                <ItemTable onCreate={createItem} onEdit={editItem} />
+                <ItemTable onCreate={createItem} onEdit={editItem} translate={t} />
             }
             
             {showForm &&
-                <ItemForm onBack={backItem} item={item}/>
+                <ItemForm onBack={backItem} item={item} translate={t} />
             }
         </div>
     );
