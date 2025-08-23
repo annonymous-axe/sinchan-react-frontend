@@ -35,7 +35,7 @@ jobs:
         env:
           RSYNC_RSH: 'ssh -o StrictHostKeyChecking=no'
         run: |
-          rsync -avz --delete ${{ env.BUILD_DIR }}/ ${{ secrets.VPS_USER }}@{{ secrets.VPS_HOST }}:${{ secrets.TARGET_DIR }}/
+          rsync -avz --delete ${{ env.BUILD_DIR }}/ ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }}:${{ secrets.TARGET_DIR }}/
       - name: Fix ownership on remote [optional]
         run: |
           ssh -o StrictHostKeyChecking=no ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }} "chown -R ${USER:-sinch3692} ${TARGET_DIR:-public_html} || true"
