@@ -35,7 +35,6 @@ jobs:
         env:
           RSYNC_RSH: 'ssh -o StrictHostKeyChecking=no'
         run: |
-          # ensure path ends without trailing slash on TARGET_DIR variable usage below if you want subdir behavior controlled
           rsync -avz --delete ${{ env.BUILD_DIR }}/ ${{ secrets.VPS_USER }}@{{ secrets.VPS_HOST }}:${{ secrets.TARGET_DIR }}/
       - name: Fix ownership on remote [optional]
         run: |
