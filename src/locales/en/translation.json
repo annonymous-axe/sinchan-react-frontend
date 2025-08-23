@@ -14,7 +14,7 @@
         "generateQuotation": "Generate Quotation",
         "itemListTitle": "Item List",
         "menus": {
-            "dashboard": "Dashboard 1",
+            "dashboard": "Dashboard",
             "transaction": "Transaction",
             "salesPurchase": "Sales & Purchase",
             "invoice": "Invoice",
