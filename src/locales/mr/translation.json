@@ -13,8 +13,18 @@
         "generateInvoice": "बिल उत्पादन करा",
         "generateQuotation": "उद्धरण उत्पादन करा",
         "itemListTitle": "वस्तुंची यादी",        
-        "masters": {
-            "Farmers": "शेतकरी"
+        "menus": {
+            "dashboard": "डॅशबोर्ड",
+            "transaction": "ट्रांज़ैक्शन",
+            "salesPurchase": "विक्री & खरेदी",
+            "invoice": "चलन",
+            "quotation": "उद्धरण",
+            "purchase": "खरेदी",
+            "master": "मास्टर्स",
+            "farmer": "कृषक",
+            "item": "आइटम",
+            "category": "श्रेणी",
+            "manufacturer": "निर्माता"            
         },
         "title": {
             "id": "आइडी",

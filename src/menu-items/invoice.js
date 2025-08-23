@@ -16,28 +16,28 @@ const icons = {
 
 const pages = {
   id: 'invoice',
-  title: 'Transactions',
-  caption: 'Sales & Purchases',
+  title: 'app.menus.transaction',
+  caption: 'app.menus.salesPurchase',
   icon: icons.IconKey,
   type: 'group',
   children: [
     {
       id: 'invoice',
-      title: 'Invoice',
+      title: 'app.menus.invoice',
       type: 'item',
       icon: icons.ReceiptIcon,
       url: '/invoice/view'
     },
     {
       id: 'quotation',
-      title: 'Quotation',
+      title: 'app.menus.quotation',
       type: 'item',
       icon: icons.DescriptionIcon,
       url: '/quotation/view'
     },
     {
       id: 'purchase',
-      title: 'Purchase',
+      title: 'app.menus.purchase',
       type: 'item',
       icon: icons.ShoppingCartIcon,
       url: '/purchase/view'

@@ -13,8 +13,18 @@
         "generateInvoice": "Generate Invoice",
         "generateQuotation": "Generate Quotation",
         "itemListTitle": "Item List",
-        "masters": {
-            "Farmers": "Farmer"
+        "menus": {
+            "dashboard": "Dashboard Change",
+            "transaction": "Transaction",
+            "salesPurchase": "Sales & Purchase",
+            "invoice": "Invoice",
+            "quotation": "Quotation",
+            "purchase": "Purchase",
+            "master": "Masters",
+            "farmer": "Farmer",
+            "item": "Item",
+            "category": "Category",
+            "manufacturer": "Manufacturer"
         },
         "title": {
             "id": "ID",
