@@ -21,9 +21,13 @@ import useConfig from 'hooks/useConfig';
 import User1 from 'assets/images/users/user-round.svg';
 import { IconLogout, IconUser } from '@tabler/icons-react';
 
+import { useAuth } from '../../../../contexts/authContext';
+
 // ==============================|| PROFILE MENU ||============================== //
 
 export default function ProfileSection() {
+
+  const { logout } =  useAuth();
   const theme = useTheme();
   const { borderRadius } = useConfig();
   const [selectedIndex] = useState(-1);
@@ -138,7 +142,7 @@ export default function ProfileSection() {
                           <ListItemIcon>
                             <IconLogout stroke={1.2} size="18" />
                           </ListItemIcon>
-                          <ListItemText primary={<Typography variant="body2">Logout</Typography>} />
+                          <ListItemText primary={<Typography variant="body2" onClick={logout}>Logout</Typography>} />
                         </ListItemButton>
                       </List>
                     </Box>

@@ -5,31 +5,9 @@ import { apiClient } from "../api/apiClient";
 export const AuthContext = createContext();
 
 export default function AuthProvider({ children }) {
-    const [token, setToken] = useState(null);
-    const [isAuthenticated, setIsAuthenticated] = useState(false);
 
-    // Restore auth state on page reload
-    // useEffect(() => {
-    //     const storedToken = localStorage.getItem("authToken");
-    //     console.log("storage token : "+storedToken);
-        
-    //     if (storedToken) {
-    //         setToken(storedToken);
-    //         setIsAuthenticated(true);
-
-    //         apiClient.interceptors.request.use((config) => {
-    //             config.headers.Authorization = storedToken;
-    //             return config;
-    //         });
-    //     }
-
-    //     // changeLanguage('mr');
-    // }, []);
-
-    // function changeLanguage(langCode) {
-    //     axios.defaults.headers.common['Accept-Language'] = langCode;
-    //     localStorage.setItem("lang", langCode); // remember user preference
-    // }    
+    const [token, setToken] = useState(localStorage.getItem("authToken"));
+    const [isAuthenticated, setIsAuthenticated] = useState(localStorage.getItem("isAuthenticated"));
 
     async function login(userCred) {
         return await loginApi(userCred).then((response) => {
@@ -39,6 +17,9 @@ export default function AuthProvider({ children }) {
                 // Save in state
                 setToken(authToken);
                 setIsAuthenticated(true);
+
+                localStorage.setItem("authToken", authToken);
+                localStorage.setItem("isAuthenticated", isAuthenticated);
 
                 // Set axios header
                 apiClient.interceptors.request.use((config) => {
@@ -55,6 +36,8 @@ export default function AuthProvider({ children }) {
     function logout() {
         setToken(null);
         setIsAuthenticated(false);
+        localStorage.removeItem("authToken");
+        localStorage.removeItem("isAuthenticated");
     }
 
     return (

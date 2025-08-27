@@ -20,13 +20,18 @@ import AccountTreeTwoToneIcon from '@mui/icons-material/AccountTreeTwoTone';
 import HomeIcon from '@mui/icons-material/Home';
 import HomeTwoToneIcon from '@mui/icons-material/HomeTwoTone';
 
+import { useTranslation } from 'react-i18next';
+
 // ==============================|| BREADCRUMBS TITLE ||============================== //
 
 function BTitle({ title }) {
+
+  const {t} = useTranslation();
+
   return (
     <Grid>
       <Typography variant="h4" sx={{ fontWeight: 500 }}>
-        {title}
+        {t(title)}
       </Typography>
     </Grid>
   );
@@ -52,6 +57,7 @@ export default function Breadcrumbs({
   const location = useLocation();
   const [main, setMain] = useState();
   const [item, setItem] = useState();
+  const {t} = useTranslation();
 
   const iconSX = {
     marginRight: 6,
@@ -77,6 +83,7 @@ export default function Breadcrumbs({
         if (menu?.url && menu.url === customLocation) {
           setMain(menu);
           setItem(menu);
+          console.log(menu);
         } else {
           getCollapse(menu);
         }
@@ -197,7 +204,7 @@ export default function Breadcrumbs({
         }}
       >
         {icons && <ItemIcon style={{ ...iconSX }} />}
-        {itemTitle}
+        {t(itemTitle)}
       </Typography>
     );
 

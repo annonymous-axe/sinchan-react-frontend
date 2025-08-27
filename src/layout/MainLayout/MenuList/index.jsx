@@ -1,4 +1,4 @@
-import { memo, useState } from 'react';
+import { memo, useMemo, useState } from 'react';
 import Divider from '@mui/material/Divider';
 import List from '@mui/material/List';
 import Typography from '@mui/material/Typography';
@@ -27,7 +27,7 @@ function MenuList() {
     }));
   }
 
-  const items = translateTitles(menuItems.items);
+  const items = useMemo(() => translateTitles(menuItems.items), [t]);
 
   const { menuMaster } = useGetMenuMaster();
   const drawerOpen = menuMaster.isDashboardDrawerOpened;

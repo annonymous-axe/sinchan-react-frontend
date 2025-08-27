@@ -17,6 +17,9 @@ import Radio from '@mui/material/Radio';
 import { Switch } from '@mui/material';
 import { useState } from 'react';
 
+// Loader
+import { ScaleLoader  } from 'react-spinners';
+
 const StyledFormControlLabel = styled((props) => <FormControlLabel {...props} />)(
   ({ theme }) => ({
     variants: [
@@ -58,9 +61,20 @@ ControlLabel.propTypes = {
 const CustomForm = ({ translate }) => {
 
   const [notification, setNotification] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [task, setTask] = useState();
+
+  const loader = (taskName) => {
+    setTask(taskName)
+    setLoading(true);
+    setTimeout(() => setLoading(false), 1000);
+    window.location.reload();
+  }
 
   const changeLanguage = (e) => {
+    
     if(e.target.value){
+      loader("Translating");
       i18n.changeLanguage(e.target.value);
     }
   }
@@ -68,7 +82,7 @@ const CustomForm = ({ translate }) => {
   return (
     <MainCard title={translate("app.title.setting")}>
       <Grid size={12} sx={{ mb: 3 }}>
-        <FontFamily />
+        <FontFamily loader={loader}/>
         <Divider />
       </Grid>
       <Grid size={12}>
@@ -80,12 +94,12 @@ const CustomForm = ({ translate }) => {
           >
               Lanaguage
           </Typography>
-          <Grid container spacing={1.25}>
-          <RadioGroup name="use-radio-group" defaultValue="first" onClick={changeLanguage}>
-            <ControlLabel value="mr" label="Marathi" control={<Radio />}/>
-            <ControlLabel value="en" label="English" control={<Radio />} />
-          </RadioGroup>
-          </Grid>          
+            <Grid container spacing={1.25} sx={{ p: 1, }}>
+            <RadioGroup name="use-radio-group" defaultValue="first" onClick={changeLanguage}>
+              <ControlLabel value="mr" label="Marathi" control={<Radio />}/>
+              <ControlLabel value="en" label="English" control={<Radio />} />
+            </RadioGroup>
+            </Grid>          
         </Stack>
       </Grid>
       <Divider />
@@ -96,7 +110,7 @@ const CustomForm = ({ translate }) => {
           >
               Other Settings
           </Typography>          
-          <Grid container sx={{ alignItems: 'center', justifyContent: 'space-between' }}>
+          <Grid container sx={{ alignItems: 'center', justifyContent: 'space-between', padding: 1 }}>
             <Grid>
               <Typography variant="subtitle1">Allow Notifications</Typography>
             </Grid>
@@ -110,7 +124,28 @@ const CustomForm = ({ translate }) => {
             </Grid>
           </Grid>
         </Stack>
-      </Grid>      
+      </Grid>  
+      
+    {loading && (
+      <div
+        style={{
+          position: "fixed",
+          top: 0,
+          left: 0,
+          width: "100vw",
+          height: "100vh",
+          backgroundColor: "rgba(255, 255, 255, 0.4)",
+          backdropFilter: "blur(4px)",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          zIndex: 1300,
+        }}
+      >
+        <Typography variant='h3' color='#8B5CF6'>{task}</Typography>
+        <ScaleLoader  size={35} color="#8B5CF6" speed={1} />
+      </div>
+    )}
     </MainCard>
   );
 };

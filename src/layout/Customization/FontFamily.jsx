@@ -12,10 +12,11 @@ import MainCard from 'ui-component/cards/MainCard';
 
 // ==============================|| CUSTOMIZATION - FONT FAMILY ||============================== //
 
-export default function FontFamilyPage() {
+export default function FontFamilyPage({ loader }) {
   const { fontFamily, onChangeFontFamily } = useConfig();
 
   const handleFontChange = (event) => {
+    loader("Changing Font Style");
     onChangeFontFamily(event.target.value);
   };
 
