@@ -9,20 +9,22 @@ export default function AuthProvider({ children }) {
     const [isAuthenticated, setIsAuthenticated] = useState(false);
 
     // Restore auth state on page reload
-    useEffect(() => {
-        const storedToken = localStorage.getItem("authToken");
-        if (storedToken) {
-            setToken(storedToken);
-            setIsAuthenticated(true);
+    // useEffect(() => {
+    //     const storedToken = localStorage.getItem("authToken");
+    //     console.log("storage token : "+storedToken);
+        
+    //     if (storedToken) {
+    //         setToken(storedToken);
+    //         setIsAuthenticated(true);
 
-            apiClient.interceptors.request.use((config) => {
-                config.headers.Authorization = storedToken;
-                return config;
-            });
-        }
+    //         apiClient.interceptors.request.use((config) => {
+    //             config.headers.Authorization = storedToken;
+    //             return config;
+    //         });
+    //     }
 
-        // changeLanguage('mr');
-    }, []);
+    //     // changeLanguage('mr');
+    // }, []);
 
     // function changeLanguage(langCode) {
     //     axios.defaults.headers.common['Accept-Language'] = langCode;
@@ -37,9 +39,6 @@ export default function AuthProvider({ children }) {
                 // Save in state
                 setToken(authToken);
                 setIsAuthenticated(true);
-
-                // Save in localStorage for persistence
-                localStorage.setItem("authToken", authToken);
 
                 // Set axios header
                 apiClient.interceptors.request.use((config) => {
@@ -56,7 +55,6 @@ export default function AuthProvider({ children }) {
     function logout() {
         setToken(null);
         setIsAuthenticated(false);
-        localStorage.removeItem("authToken");
     }
 
     return (

@@ -3,7 +3,7 @@
         "create": "Create",
         "edit": "Edit",
         "back": "Back",
-        "submit": "Submit",
+        "submit": "Save",
         "update": "Update",
         "delete": "Delete",
         "action": "Action",
@@ -24,7 +24,9 @@
             "farmer": "Farmer",
             "item": "Item",
             "category": "Category",
-            "manufacturer": "Manufacturer"
+            "manufacturer": "Manufacturer",
+            "others": "Others",
+            "setting": "Setting"         
         },
         "title": {
             "id": "ID",
@@ -52,6 +54,7 @@
             "itemListTitle": "Item List",
             "pOListTitle": "Purchase Order List",
             "invoiceListTitle": "Invoice List",
+            "setting": "Settings",
 
             "itemTitle": "Item Form",
             "manufacturerFormTitle": "Manufacturer Form",

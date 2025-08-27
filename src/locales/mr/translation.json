@@ -24,7 +24,9 @@
             "farmer": "कृषक",
             "item": "आइटम",
             "category": "श्रेणी",
-            "manufacturer": "निर्माता"            
+            "manufacturer": "निर्माता",
+            "others": "इतर",
+            "setting": "सेटिंग"
         },
         "title": {
             "id": "आइडी",
@@ -52,6 +54,7 @@
             "itemListTitle": "वस्तुंची यादी",
             "pOListTitle": "खरेदीची यादी",
             "invoiceListTitle": "बिलची यादी",
+            "setting": "सेटिंग",
 
             "itemFormTitle": "वस्तुचे फॉर्म",
             "manufacturerFormTitle": "निर्माताचे फॉर्म",

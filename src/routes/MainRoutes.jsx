@@ -23,27 +23,29 @@ const Invoice = Loadable(lazy(() => import('views/pages/invoice/index')));
 const Quotation = Loadable(lazy(() => import('views/pages/quotation/index')));
 const Category = Loadable(lazy(() => import('views/pages/category/index')));
 const Purchase = Loadable(lazy(() => import('views/pages/purchase/index')));
+const Setting = Loadable(lazy(() => import('views/pages/setting/index')));
 
 // ==============================|| MAIN ROUTING ||============================== //
 
 // authentication provider
-// function AuthenticateRoute({ children }){
 
-//   const context = useAuth();
+function AuthenticateRoute({ children }){
 
-//   if(context.isAuthenticated){
-//     return children;
-//   }
+  const context = useAuth();
 
-//   return <Navigate to='/pages/login' />
-// }
+  if(context.isAuthenticated){
+    return children;
+  }
+
+  return <Navigate to='/pages/login' />
+}
 
 const MainRoutes = {
   path: '/',
   element: (
-      // <AuthenticateRoute>
+      <AuthenticateRoute>
         <MainLayout />
-      // </AuthenticateRoute>
+      </AuthenticateRoute>
   ),
   children: [
     {
@@ -86,7 +88,11 @@ const MainRoutes = {
     {
       path: '/category/view',
       element: <Category />
-    }      
+    },
+    {
+      path: '/setting/view',
+      element: <Setting />
+    }
   ]
 };
 
