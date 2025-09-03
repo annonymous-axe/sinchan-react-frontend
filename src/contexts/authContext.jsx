@@ -6,8 +6,8 @@ export const AuthContext = createContext();
 
 export default function AuthProvider({ children }) {
 
-    const [token, setToken] = useState(localStorage.getItem("authToken"));
-    const [isAuthenticated, setIsAuthenticated] = useState(localStorage.getItem("isAuthenticated"));
+    const [token, setToken] = useState(sessionStorage.getItem("authToken"));
+    const [isAuthenticated, setIsAuthenticated] = useState(sessionStorage.getItem("isAuthenticated"));
 
     async function login(userCred) {
         return await loginApi(userCred).then((response) => {
@@ -18,8 +18,8 @@ export default function AuthProvider({ children }) {
                 setToken(authToken);
                 setIsAuthenticated(true);
 
-                localStorage.setItem("authToken", authToken);
-                localStorage.setItem("isAuthenticated", isAuthenticated);
+                sessionStorage.setItem("authToken", authToken);
+                sessionStorage.setItem("isAuthenticated", isAuthenticated);
 
                 // Set axios header
                 apiClient.interceptors.request.use((config) => {
@@ -36,8 +36,8 @@ export default function AuthProvider({ children }) {
     function logout() {
         setToken(null);
         setIsAuthenticated(false);
-        localStorage.removeItem("authToken");
-        localStorage.removeItem("isAuthenticated");
+        sessionStorage.removeItem("authToken");
+        sessionStorage.removeItem("isAuthenticated");
     }
 
     return (

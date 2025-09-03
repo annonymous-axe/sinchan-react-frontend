@@ -47,6 +47,8 @@
             "supplierName": "Supplier Name",
             "purchaseDate": "Purchase Date",
             "billNumber": "Bill Number",
+            "userAccount": "User Profile",
+            "setting": "Settings",
 
             "farmerListTitle": "Farmer List",
             "categoryListTitle": "Category List",
@@ -54,7 +56,6 @@
             "itemListTitle": "Item List",
             "pOListTitle": "Purchase Order List",
             "invoiceListTitle": "Invoice List",
-            "setting": "Settings",
 
             "itemTitle": "Item Form",
             "manufacturerFormTitle": "Manufacturer Form",

@@ -46,7 +46,9 @@
             "poNumber": "PO न.",
             "supplierName": "पुरवठादारचे नाव",
             "purchaseDate": "खरेदी तारीख",
-            "billNumber": "बिल क्रमांक",            
+            "billNumber": "बिल क्रमांक",
+            "userAccount": "उपयोगकर्ता प्रोफ़ाइल",
+            "setting": "सेटिंग",
 
             "farmerListTitle": "शेतकऱ्यांची यादी",
             "categoryListTitle": "श्रेणीची यादी",
@@ -54,7 +56,6 @@
             "itemListTitle": "वस्तुंची यादी",
             "pOListTitle": "खरेदीची यादी",
             "invoiceListTitle": "बिलची यादी",
-            "setting": "सेटिंग",
 
             "itemFormTitle": "वस्तुचे फॉर्म",
             "manufacturerFormTitle": "निर्माताचे फॉर्म",

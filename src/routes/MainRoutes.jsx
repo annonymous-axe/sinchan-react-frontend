@@ -24,6 +24,7 @@ const Quotation = Loadable(lazy(() => import('views/pages/quotation/index')));
 const Category = Loadable(lazy(() => import('views/pages/category/index')));
 const Purchase = Loadable(lazy(() => import('views/pages/purchase/index')));
 const Setting = Loadable(lazy(() => import('views/pages/setting/index')));
+const User = Loadable(lazy(() => import('views/pages/user/index')));
 
 // ==============================|| MAIN ROUTING ||============================== //
 
@@ -92,6 +93,10 @@ const MainRoutes = {
     {
       path: '/setting/view',
       element: <Setting />
+    },
+    {
+      path: '/user/view',
+      element: <User />
     }
   ]
 };

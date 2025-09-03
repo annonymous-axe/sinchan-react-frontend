@@ -22,6 +22,7 @@ import User1 from 'assets/images/users/user-round.svg';
 import { IconLogout, IconUser } from '@tabler/icons-react';
 
 import { useAuth } from '../../../../contexts/authContext';
+import { useNavigate } from 'react-router';
 
 // ==============================|| PROFILE MENU ||============================== //
 
@@ -33,6 +34,8 @@ export default function ProfileSection() {
   const [selectedIndex] = useState(-1);
   const [open, setOpen] = useState(false);
   const [firmName, setFirmName] = useState('CHAMUNDAI IRRIGATION');
+
+  const navigate = useNavigate();
 
   const anchorRef = useRef(null);
 
@@ -47,6 +50,12 @@ export default function ProfileSection() {
 
     setOpen(false);
   };
+
+  const navigateToProfile = (e) => {
+      e.preventDefault();
+      setOpen(false);
+      navigate("/user/view");
+  }
 
   const prevOpen = useRef(open);
   useEffect(() => {
@@ -136,13 +145,13 @@ export default function ProfileSection() {
                           <ListItemIcon>
                             <IconUser stroke={1.2} size="18px" />
                           </ListItemIcon>
-                          <ListItemText primary={<Typography variant="body2">Account Settings</Typography>} />
+                          <ListItemText primary={<Typography variant="body2">Account Settings</Typography>} onClick={navigateToProfile}/>
                         </ListItemButton>
                         <ListItemButton sx={{ borderRadius: `${borderRadius}px` }} selected={selectedIndex === 4}>
                           <ListItemIcon>
                             <IconLogout stroke={1.2} size="18" />
                           </ListItemIcon>
-                          <ListItemText primary={<Typography variant="body2" onClick={logout}>Logout</Typography>} />
+                          <ListItemText primary={<Typography variant="body2" onClick={logout}>Logout</Typography>} onClick={logout} />
                         </ListItemButton>
                       </List>
                     </Box>

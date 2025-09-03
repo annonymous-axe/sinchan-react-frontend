@@ -5,14 +5,12 @@ import { useTranslation } from "react-i18next";
 
 const SettingForm = Loadable(lazy(() => import('./settingForm')));
 
-export default function Item(){
+export default function Setting(){
 
     const {t} = useTranslation();
 
 
     return(
-        <div>
-            <SettingForm translate={t} />
-        </div>
+        <SettingForm translate={t} />
     );
 }
