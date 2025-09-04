@@ -32,6 +32,12 @@ const UserCustomeForm = ({ user, translate }) => {
       getUser().then(data => setFormData(data.data));
   }, []);
 
+  useEffect(() => {
+    setBlob("http://localhost:8080/images/"+formData.imageName);
+    sessionStorage.setItem("firmImage", "http://localhost:8080/images/"+formData.imageName);
+    sessionStorage.setItem("firmName", formData.firmNameEn);
+  }, [formData]);
+
   const handleChange = (e) => {
     setFormData((prev) => ({
       ...prev,

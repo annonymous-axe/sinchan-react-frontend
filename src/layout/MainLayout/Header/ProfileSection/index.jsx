@@ -33,7 +33,16 @@ export default function ProfileSection() {
   const { borderRadius } = useConfig();
   const [selectedIndex] = useState(-1);
   const [open, setOpen] = useState(false);
-  const [firmName, setFirmName] = useState('CHAMUNDAI IRRIGATION');
+  const [firmName, setFirmName] = useState('');
+  const [firmImage, setFirmImage] = useState('');
+
+  useEffect(() => {
+    setFirmImage(sessionStorage.getItem('firmImage'));
+  }, [sessionStorage.getItem("firmImage")]);
+
+  useEffect(() => {
+    setFirmName(sessionStorage.getItem('firmName'));
+  }, [sessionStorage.getItem("firmName")]);  
 
   const navigate = useNavigate();
 
@@ -78,7 +87,7 @@ export default function ProfileSection() {
         }}
         icon={
           <Avatar
-            src={User1}
+            src={firmImage}
             alt="user-images"
             sx={{
               ...theme.typography.mediumAvatar,

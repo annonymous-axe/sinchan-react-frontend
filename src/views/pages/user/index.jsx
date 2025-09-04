@@ -19,7 +19,8 @@ export default function User(){
         contactNumber: "",
         gstNumber: "",
         addressEn: "",
-        addressMh: ""
+        addressMh: "",
+        imageName: ""
     };
 
     return(
