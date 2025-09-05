@@ -12,7 +12,8 @@ export default function AuthProvider({ children }) {
     async function login(userCred) {
         return await loginApi(userCred).then((response) => {
             if (response.status === 200) {
-                const authToken = "Bearer " + response.data;
+
+                const authToken = "Bearer " + response.data[0];
 
                 // Save in state
                 setToken(authToken);
@@ -20,6 +21,9 @@ export default function AuthProvider({ children }) {
 
                 sessionStorage.setItem("authToken", authToken);
                 sessionStorage.setItem("isAuthenticated", isAuthenticated);
+                sessionStorage.setItem("firmImage", "http://localhost:8080/images/"+response.data[1].imageName);
+                sessionStorage.setItem("firmName", response.data[1].firmNameEn);
+                sessionStorage.setItem("user", response.data[1]);
 
                 // Set axios header
                 apiClient.interceptors.request.use((config) => {
@@ -38,6 +42,9 @@ export default function AuthProvider({ children }) {
         setIsAuthenticated(false);
         sessionStorage.removeItem("authToken");
         sessionStorage.removeItem("isAuthenticated");
+        sessionStorage.removeItem("user");
+        sessionStorage.removeItem("firmImage");
+        sessionStorage.removeItem("firmName");
     }
 
     return (
