@@ -7,7 +7,7 @@ import CustomTable from '../../../ui-component/components/CustomeTable';
 import { fetchManufacturerList, fetchManufacturerDetails } from '../../../api/manufacturer-apis';
 import useConfig from '../../../hooks/useConfig';
 
-export default function Table({ onCreate, onEdit }){
+export default function Table({ onCreate, onEdit, translate }){
 
     const { lang } = useConfig();
 
@@ -20,11 +20,11 @@ export default function Table({ onCreate, onEdit }){
     const [manufacturerList, setManufacturerList] = useState([]);
 
     const columns = [
-      { field: 'id', headerName: 'ID', width: 90 },
-      { field: nameFied, headerName: 'Manufacturer Name', flex: 1 },
+      { field: 'id', headerName: translate("app.title.id"), width: 90 },
+      { field: nameFied, headerName: translate("app.title.manufacturer"), flex: 1 },
       {
           field: 'Action',
-          headerName: 'Action',
+          headerName: translate("app.action"),
           width: 150,
           sortable: false,
           renderCell: (params) => {
@@ -44,7 +44,7 @@ export default function Table({ onCreate, onEdit }){
               color="primary"
               onClick={handleClick}
               >
-              Edit
+              {translate("app.edit")}
               </Button>
           );
           }
@@ -64,7 +64,7 @@ export default function Table({ onCreate, onEdit }){
     }, []);
 
   return (
-    <MainCard title="Manufacturer List"
+    <MainCard title={translate("app.title.manufacturerListTitle")}
       secondary={
         <Button
           variant="contained"

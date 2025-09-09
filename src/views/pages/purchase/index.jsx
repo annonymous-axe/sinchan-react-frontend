@@ -2,8 +2,11 @@ import { useState } from "react";
 import PurchaseTable from "./purchaseList";
 import PurchaseForm from "./purchaseCustomeForm";
 import dayjs from "dayjs";
+import { useTranslation } from "react-i18next";
 
 export default function purchase(){
+
+    const {t} = useTranslation();
 
     const initialStateOfForm = {
 
@@ -13,7 +16,7 @@ export default function purchase(){
 
     supplierNameEn: '',
 
-    supplierNameMh: '',
+    supplierNameMr: '',
 
     purchaseDate: null,
 
@@ -46,11 +49,11 @@ export default function purchase(){
     return(
         <div>
             {!showForm &&
-                <PurchaseTable onCreate={createPurchase} onEdit={editPurchase} />
+                <PurchaseTable onCreate={createPurchase} onEdit={editPurchase} translate={t} />
             }
             
             {showForm &&
-                <PurchaseForm onBack={backPurchase} purchase={purchase}/>
+                <PurchaseForm onBack={backPurchase} purchase={purchase} translate={t} />
             }
         </div>
     );

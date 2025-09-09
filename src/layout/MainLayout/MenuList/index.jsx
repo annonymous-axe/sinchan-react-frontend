@@ -1,4 +1,4 @@
-import { memo, useState } from 'react';
+import { memo, useMemo, useState } from 'react';
 import Divider from '@mui/material/Divider';
 import List from '@mui/material/List';
 import Typography from '@mui/material/Typography';
@@ -10,10 +10,25 @@ import NavGroup from './NavGroup';
 import menuItems from 'menu-items';
 
 import { useGetMenuMaster } from 'api/menu';
+import { useTranslation } from 'react-i18next';
 
 // ==============================|| SIDEBAR MENU LIST ||============================== //
 
 function MenuList() {
+
+  const{ t } = useTranslation();
+
+  function translateTitles(items){
+    return items.map((item) => ({
+      ...item,
+      title: t(item.title),
+      caption: t(item.caption),
+      ...(item.children && {children: translateTitles(item.children)})
+    }));
+  }
+
+  const items = useMemo(() => translateTitles(menuItems.items), [t]);
+
   const { menuMaster } = useGetMenuMaster();
   const drawerOpen = menuMaster.isDashboardDrawerOpened;
 
@@ -21,14 +36,14 @@ function MenuList() {
 
   const lastItem = null;
 
-  let lastItemIndex = menuItems.items.length - 1;
+  let lastItemIndex = items.length - 1;
   let remItems = [];
   let lastItemId;
 
-  if (lastItem && lastItem < menuItems.items.length) {
-    lastItemId = menuItems.items[lastItem - 1].id;
+  if (lastItem && lastItem < items.length) {
+    lastItemId = items[lastItem - 1].id;
     lastItemIndex = lastItem - 1;
-    remItems = menuItems.items.slice(lastItem - 1, menuItems.items.length).map((item) => ({
+    remItems = items.slice(lastItem - 1, items.length).map((item) => ({
       title: item.title,
       elements: item.children,
       icon: item.icon,
@@ -38,7 +53,7 @@ function MenuList() {
     }));
   }
 
-  const navItems = menuItems.items.slice(0, lastItemIndex + 1).map((item, index) => {
+  const navItems = items.slice(0, lastItemIndex + 1).map((item, index) => {
     switch (item.type) {
       case 'group':
         if (item.url && item.id !== lastItemId) {

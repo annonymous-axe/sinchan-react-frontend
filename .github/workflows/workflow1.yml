@@ -1,0 +1,43 @@
+name: React build & deploy to VPS
+
+on:
+  push:
+    branches: [ main ]
+
+env:
+  BUILD_DIR: ${{ secrets.BUILD_DIR }}
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout node
+        uses: actions/checkout@v4
+
+      - name: Use node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build project
+        run: npm run build
+
+      - name: Start ssh agent and add private key
+        uses: webfactory/ssh-agent@v0.5.4
+        with:
+          ssh-private-key: ${{ secrets.VPS_PRIVATE_KEY }}
+
+      - name: Sync build to vps using rsync
+        env:
+          RSYNC_RSH: 'ssh -o StrictHostKeyChecking=no'
+        run: |
+          rsync -avz ${{ env.BUILD_DIR }}/ ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }}:${{ secrets.TARGET_DIR }}/
+      - name: Fix ownership on remote [optional]
+        run: |
+          ssh -o StrictHostKeyChecking=no ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }} "chown -R ${USER:-sinch3692} ${TARGET_DIR:-public_html} || true"
+        env:
+          TARGET_DIR: ${{ secrets.TARGET_DIR }}

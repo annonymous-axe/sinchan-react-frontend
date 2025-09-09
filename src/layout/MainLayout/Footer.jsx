@@ -4,6 +4,8 @@ import { Link as RouterLink } from 'react-router-dom';
 import Link from '@mui/material/Link';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
+import LinkedInIcon from '@mui/icons-material/LinkedIn';
+import GitHubIcon from '@mui/icons-material/GitHub';
 
 export default function Footer() {
   return (
@@ -19,31 +21,31 @@ export default function Footer() {
       <Typography variant="caption">
         &copy; All rights reserved{' '}
         <Typography component={Link} href="" underline="hover" target="_blank" color="secondary.main">
-          Nexttech
+          Nextech
         </Typography>
       </Typography>
-      {/* <Stack direction="row" sx={{ gap: 1.5, alignItems: 'center', justifyContent: 'space-between' }}>
-        <Link
+      <Stack direction="row" sx={{ gap: 1.5, alignItems: 'center', justifyContent: 'space-between' }}>
+        {/* <Link
           component={RouterLink}
-          to="https://x.com/codedthemes"
+          to="https://www.linkedin.com/in/kamlesh-baviskar"
           underline="hover"
           target="_blank"
           variant="caption"
           color="text.primary"
         >
-          Twitter
+          <LinkedInIcon />
         </Link>
         <Link
           component={RouterLink}
-          to="https://discord.com/invite/p2E2WhCb6s"
+          to="https://github.com/annonymous-axe"
           underline="hover"
           target="_blank"
           variant="caption"
           color="text.primary"
         >
-          Discord
-        </Link>
-      </Stack> */}
+          <GitHubIcon />
+        </Link> */}
+      </Stack>
     </Stack>
   );
 }

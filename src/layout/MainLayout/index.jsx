@@ -17,6 +17,8 @@ import Customization from '../Customization';
 import Loader from 'ui-component/Loader';
 import Breadcrumbs from 'ui-component/extended/Breadcrumbs';
 
+import NavigationScroll from 'layout/NavigationScroll';
+
 import useConfig from 'hooks/useConfig';
 import { handlerDrawerOpen, useGetMenuMaster } from 'api/menu';
 
@@ -59,7 +61,9 @@ export default function MainLayout() {
         <Box sx={{ ...{ px: { xs: 0 } }, minHeight: 'calc(100vh - 128px)', display: 'flex', flexDirection: 'column' }}>
           {/* breadcrumb */}
           <Breadcrumbs />
-          <Outlet />
+          <NavigationScroll>
+            <Outlet />
+          </NavigationScroll>
           <Footer />
         </Box>
       </MainContentStyled>

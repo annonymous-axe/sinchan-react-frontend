@@ -18,8 +18,11 @@ import MainCard from '../../../ui-component/cards/MainCard';
 import { fetchCategoryList } from '../../../api/category-apis';
 import { fetchManufacturerList } from '../../../api/manufacturer-apis';
 import { saveItem, updateItem, deleteItem, fetchUnitList } from '../../../api/item-apis';
+import useConfig from '../../../hooks/useConfig';
+import Sanscript from '@indic-transliteration/sanscript';
 
-const CustomForm = ({ onBack, item }) => {
+const CustomForm = ({ onBack, item, translate }) => {
+  const { lang } = useConfig();
   const [formData, setFormData] = useState(item);
   const [categoryList, setCategoryList] = useState([]);
   const [manufacturerList, setManufacturerList] = useState([]);
@@ -42,6 +45,14 @@ const CustomForm = ({ onBack, item }) => {
       ...prev,
       [e.target.name]: e.target.value
     }));
+
+    if(e.target.name == 'itemNameEn'){
+      const opts = { syncope: true };
+      setFormData((prev) => ({
+        ...prev,
+        itemNameMh: Sanscript.t(e.target.value, "itrans", "devanagari", opts)
+      }));
+    }    
   };
 
   // Handle change for subtable
@@ -104,7 +115,7 @@ const CustomForm = ({ onBack, item }) => {
   }, []);
 
   return (
-    <MainCard title="Item Form">
+    <MainCard title={translate("app.title.itemFormTitle")}>
       <Box component="form" onSubmit={handleSubmit} noValidate>
         <Grid container spacing={3}>
           {/* Main Form Fields */}
@@ -121,6 +132,17 @@ const CustomForm = ({ onBack, item }) => {
 
           <Grid item xs={12} sm={6}>
             <TextField
+              fullWidth
+              label="सामग्रीचे नाव"
+              name="itemNameMh"
+              value={formData.itemNameMh}
+              onChange={handleChange}
+              required
+            />
+          </Grid>          
+
+          <Grid item xs={12} sm={6}>
+            <TextField
               select
               fullWidth
               label="Category"
@@ -131,7 +153,7 @@ const CustomForm = ({ onBack, item }) => {
             >
               {categoryList.map((category) => (
                 <MenuItem key={category.id} value={category.id}>
-                  {category.nameEn}
+                  {lang ? category.nameEn : category.nameMh}
                 </MenuItem>
               ))}
             </TextField>
@@ -149,7 +171,7 @@ const CustomForm = ({ onBack, item }) => {
             >
               {unitList.map((unit) => (
                 <MenuItem key={unit.intKey} value={unit.intKey}>
-                  {unit.stringValue}
+                  {lang ? unit.stringValue : unit.stringValue2}
                 </MenuItem>
               ))}            
             </TextField>
@@ -168,16 +190,16 @@ const CustomForm = ({ onBack, item }) => {
 
           {/* Subtable */}
           <Grid item xs={12}>
-            <MainCard title="Item List" content={false}>
+            <MainCard title={translate("app.title.itemListTitle")} content={false}>
               <Paper variant="outlined" sx={{ overflowX: 'auto' }}>
                 <Table>
                   <TableHead>
                     <TableRow>
-                      <TableCell>Manufacturer</TableCell>
-                      <TableCell>CML Number</TableCell>
-                      <TableCell>Quantity</TableCell>
-                      <TableCell>Rate</TableCell>
-                      <TableCell align="center">Action</TableCell>
+                      <TableCell>{translate("app.title.manufacturer")}</TableCell>
+                      <TableCell>{translate("app.title.cmlNo")}</TableCell>
+                      <TableCell>{translate("app.title.qty")}</TableCell>
+                      <TableCell>{translate("app.title.rate")}</TableCell>
+                      <TableCell align="center">{translate("app.action")}</TableCell>
                     </TableRow>
                   </TableHead>
                   <TableBody>
@@ -195,7 +217,7 @@ const CustomForm = ({ onBack, item }) => {
                           >
                             {manufacturerList.map((m) => (
                               <MenuItem key={m.id} value={m.id}>
-                                {m.nameEn}
+                                {lang ? m.nameEn : m.nameMh}
                               </MenuItem>
                             ))}
                           </TextField>
@@ -250,7 +272,7 @@ const CustomForm = ({ onBack, item }) => {
                           variant="outlined"
                           onClick={addItemRow}
                         >
-                          Add Row
+                          {translate("app.addRow")}
                         </Button>
                       </TableCell>
                     </TableRow>
@@ -263,19 +285,19 @@ const CustomForm = ({ onBack, item }) => {
           {/* Action Buttons */}
           <Grid item xs={12} display="flex" justifyContent="flex-end" gap={2}>
             <Button variant="outlined" color="secondary" onClick={onBack}>
-              Back
+              {translate("app.back")}
             </Button>
             {formData.id === '' ? (
               <Button type="submit" variant="contained" color="primary">
-                Submit
+                {translate("app.submit")}
               </Button>
             ) : (
               <>
                 <Button variant="contained" color="primary" onClick={handleUpdateItem}>
-                  Update
+                  {translate("app.update")}
                 </Button>
                 <Button variant="contained" color="error" onClick={handleDeleteItem}>
-                  Delete
+                  {translate("app.delete")}
                 </Button>
               </>
             )}

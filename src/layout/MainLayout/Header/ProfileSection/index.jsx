@@ -1,61 +1,51 @@
 import { useEffect, useRef, useState } from 'react';
 
-// material-ui
 import { useTheme } from '@mui/material/styles';
 import Avatar from '@mui/material/Avatar';
-import Card from '@mui/material/Card';
-import CardContent from '@mui/material/CardContent';
 import Chip from '@mui/material/Chip';
 import ClickAwayListener from '@mui/material/ClickAwayListener';
-import Divider from '@mui/material/Divider';
-import Grid from '@mui/material/Grid2';
-import InputAdornment from '@mui/material/InputAdornment';
 import List from '@mui/material/List';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-import OutlinedInput from '@mui/material/OutlinedInput';
 import Paper from '@mui/material/Paper';
 import Popper from '@mui/material/Popper';
-import Stack from '@mui/material/Stack';
-import Switch from '@mui/material/Switch';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 
-// project imports
-import FontFamily from '../../../Customization/FontFamily';
-import UpgradePlanCard from './UpgradePlanCard';
 import MainCard from 'ui-component/cards/MainCard';
 import Transitions from 'ui-component/extended/Transitions';
 import useConfig from 'hooks/useConfig';
 
 // assets
 import User1 from 'assets/images/users/user-round.svg';
-import { IconLogout, IconSearch, IconSettings, IconUser } from '@tabler/icons-react';
+import { IconLogout, IconUser } from '@tabler/icons-react';
+
 import { useAuth } from '../../../../contexts/authContext';
+import { useNavigate } from 'react-router';
 
 // ==============================|| PROFILE MENU ||============================== //
 
 export default function ProfileSection() {
+
+  const { logout } =  useAuth();
   const theme = useTheme();
   const { borderRadius } = useConfig();
-  const { lang, onChangLanguage } = useConfig();  
-  const [sdm, setSdm] = useState(lang);
-  const [value, setValue] = useState('');
-  const [notification, setNotification] = useState(false);
   const [selectedIndex] = useState(-1);
   const [open, setOpen] = useState(false);
-  const [firmName, setFirmName] = useState('Firm Name');
-  const [userName, setUserName] = useState('User Name');
+  const [firmName, setFirmName] = useState('');
+  const [firmImage, setFirmImage] = useState('');
 
-  const authContext = useAuth();
+  useEffect(() => {
+    setFirmImage(sessionStorage.getItem('firmImage'));
+  }, [sessionStorage.getItem("firmImage")]);
 
-  // in future use authContext.user.userName
-  
+  useEffect(() => {
+    setFirmName(sessionStorage.getItem('firmName'));
+  }, [sessionStorage.getItem("firmName")]);  
 
-  /**
-   * anchorRef is used on different components and specifying one type leads to other components throwing an error
-   * */
+  const navigate = useNavigate();
+
   const anchorRef = useRef(null);
 
   const handleToggle = () => {
@@ -70,11 +60,10 @@ export default function ProfileSection() {
     setOpen(false);
   };
 
-  const changeLang = (e) => {
-
-    setSdm(e.target.checked);
-    onChangLanguage(e.target.checked)
-
+  const navigateToProfile = (e) => {
+      e.preventDefault();
+      setOpen(false);
+      navigate("/user/view");
   }
 
   const prevOpen = useRef(open);
@@ -90,17 +79,15 @@ export default function ProfileSection() {
     <>
       <Chip
         sx={{
-          ml: 2,
           height: '48px',
-          alignItems: 'center',
           borderRadius: '27px',
           '& .MuiChip-label': {
-            lineHeight: 0
-          }
+            fontSize: 20
+          },
         }}
         icon={
           <Avatar
-            src={User1}
+            src={firmImage}
             alt="user-images"
             sx={{
               ...theme.typography.mediumAvatar,
@@ -113,12 +100,11 @@ export default function ProfileSection() {
             color="inherit"
           />
         }
-        label={<IconSettings stroke={1.5} size="24px" />}
+        label={firmName}
         ref={anchorRef}
         aria-controls={open ? 'menu-list-grow' : undefined}
         aria-haspopup="true"
         onClick={handleToggle}
-        color="primary"
         aria-label="user-account"
       />
       <Popper
@@ -143,34 +129,7 @@ export default function ProfileSection() {
               <Paper>
                 {open && (
                   <MainCard border={false} elevation={16} content={false} boxShadow shadow={theme.shadows[16]}>
-                    <Box sx={{ p: 2, pb: 0 }}>
-                      <Stack>
-                        <Stack direction="row" spacing={0.5} sx={{ alignItems: 'center' }}>
-                          <Typography variant="h4">{firmName}</Typography>
-                          {/* <Typography component="span" variant="h4" sx={{ fontWeight: 400 }}>
-                            Johne Doe
-                          </Typography> */}
-                        </Stack>
-                        <Typography variant="subtitle2">{userName}</Typography>
-                      </Stack>
-                      <OutlinedInput
-                        sx={{ width: '100%', pr: 1, pl: 2, my: 2 }}
-                        id="input-search-profile"
-                        value={value}
-                        onChange={(e) => setValue(e.target.value)}
-                        placeholder="Search profile options"
-                        startAdornment={
-                          <InputAdornment position="start">
-                            <IconSearch stroke={1.5} size="16px" />
-                          </InputAdornment>
-                        }
-                        aria-describedby="search-helper-text"
-                        inputProps={{
-                          'aria-label': 'weight'
-                        }}
-                      />
-                      <Divider />
-                    </Box>
+
                     <Box
                       sx={{
                         p: 2,
@@ -181,96 +140,27 @@ export default function ProfileSection() {
                         '&::-webkit-scrollbar': { width: 5 }
                       }}
                     >
-
-                    <Grid size={12}>
-                      {/* font family */}
-                      <FontFamily />
-                      <Divider />
-                    </Grid>
-
-                      <Divider />
-                      <Card sx={{ bgcolor: 'primary.light', my: 2 }}>
-                        <CardContent>
-                          <Grid container spacing={3} direction="column">
-                            <Grid>
-                              <Grid container sx={{ alignItems: 'center', justifyContent: 'space-between' }}>
-                                <Grid>
-                                  <Typography variant="subtitle1">Translate Marathi</Typography>
-                                </Grid>
-                                <Grid>
-                                  <Switch
-                                    color="primary"
-                                    checked={sdm}
-                                    onChange={changeLang}
-                                    name="sdm"
-                                    size="small"
-                                  />
-                                </Grid>
-                              </Grid>
-                            </Grid>
-                            <Grid>
-                              <Grid container sx={{ alignItems: 'center', justifyContent: 'space-between' }}>
-                                <Grid>
-                                  <Typography variant="subtitle1">Allow Notifications</Typography>
-                                </Grid>
-                                <Grid>
-                                  <Switch
-                                    checked={notification}
-                                    onChange={(e) => setNotification(e.target.checked)}
-                                    name="sdm"
-                                    size="small"
-                                  />
-                                </Grid>
-                              </Grid>
-                            </Grid>
-                          </Grid>
-                        </CardContent>
-                      </Card>
-                      <Divider />
                       <List
                         component="nav"
                         sx={{
                           width: '100%',
-                          maxWidth: 350,
-                          minWidth: 300,
+                          maxWidth: 200,
+                          minWidth: 150,
                           borderRadius: `${borderRadius}px`,
                           '& .MuiListItemButton-root': { mt: 0.5 }
                         }}
                       >
                         <ListItemButton sx={{ borderRadius: `${borderRadius}px` }} selected={selectedIndex === 0}>
                           <ListItemIcon>
-                            <IconSettings stroke={1.5} size="20px" />
+                            <IconUser stroke={1.2} size="18px" />
                           </ListItemIcon>
-                          <ListItemText primary={<Typography variant="body2">Account Settings</Typography>} />
-                        </ListItemButton>
-                        <ListItemButton sx={{ borderRadius: `${borderRadius}px` }} selected={selectedIndex === 1}>
-                          <ListItemIcon>
-                            <IconUser stroke={1.5} size="20px" />
-                          </ListItemIcon>
-                          <ListItemText
-                            primary={
-                              <Grid container spacing={1} sx={{ justifyContent: 'space-between' }}>
-                                <Grid>
-                                  <Typography variant="body2">Social Profile</Typography>
-                                </Grid>
-                                <Grid>
-                                  <Chip
-                                    label="02"
-                                    variant="filled"
-                                    size="small"
-                                    color="warning"
-                                    sx={{ '& .MuiChip-label': { mt: 0.25 } }}
-                                  />
-                                </Grid>
-                              </Grid>
-                            }
-                          />
+                          <ListItemText primary={<Typography variant="body2">Account Settings</Typography>} onClick={navigateToProfile}/>
                         </ListItemButton>
                         <ListItemButton sx={{ borderRadius: `${borderRadius}px` }} selected={selectedIndex === 4}>
                           <ListItemIcon>
-                            <IconLogout stroke={1.5} size="20px" />
+                            <IconLogout stroke={1.2} size="18" />
                           </ListItemIcon>
-                          <ListItemText primary={<Typography variant="body2">Logout</Typography>} />
+                          <ListItemText primary={<Typography variant="body2" onClick={logout}>Logout</Typography>} onClick={logout} />
                         </ListItemButton>
                       </List>
                     </Box>

@@ -1,11 +1,15 @@
 import { lazy, useState } from "react";
 
 import Loadable from '../../../ui-component/Loadable';
+import { useTranslation } from "react-i18next";
 
 const CategoryTable = Loadable(lazy(() => import('./categoryList')));
 const CategoryForm = Loadable(lazy(() => import('./categoryForm')));
 
 export default function Item(){
+
+
+    const {t} = useTranslation();
 
     const initialStateOfForm = {
         id: '',
@@ -34,11 +38,11 @@ export default function Item(){
     return(
         <div>
             {!showForm &&
-                <CategoryTable onCreate={createManufacturer} onEdit={editManufacturer} />
+                <CategoryTable onCreate={createManufacturer} onEdit={editManufacturer} translate={t} />
             }
             
             {showForm &&
-                <CategoryForm onBack={backManufacturer} manufacturer={manufacturer}/>
+                <CategoryForm onBack={backManufacturer} manufacturer={manufacturer} translate={t} />
             }
         </div>
     );

@@ -7,7 +7,7 @@ import CustomTable from '../../../ui-component/components/CustomeTable';
 import { fetchItemList, fetchItemDetails } from '../../../api/item-apis';
 import useConfig from '../../../hooks/useConfig';
 
-export default function Table({ onCreate, onEdit }){
+export default function Table({ onCreate, onEdit, translate }){
 
     const [itemList, setItemList] = useState([]);
     const { lang } = useConfig();
@@ -20,13 +20,13 @@ export default function Table({ onCreate, onEdit }){
     }    
 
     const columns = [
-      { field: 'id', headerName: 'ID', width: 90 },
-      { field: langFieds.categoryName, headerName: 'Category Name', flex: 1 },
-      { field: langFieds.itemName, headerName: 'Item Name', flex: 1 },
-      { field: 'measurementType', headerName: 'Measurement Type', width: 150 },
+      { field: 'id', headerName: translate('app.title.id'), width: 90 },
+      { field: langFieds.categoryName, headerName: translate('app.title.category'), flex: 1 },
+      { field: langFieds.itemName, headerName: translate('app.title.item'), flex: 1 },
+      { field: 'measurementType', headerName: translate('app.title.unit'), width: 150 },
       {
           field: 'Action',
-          headerName: 'Action',
+          headerName: translate('app.action'),
           width: 150,
           sortable: false,
           renderCell: (params) => {
@@ -45,7 +45,7 @@ export default function Table({ onCreate, onEdit }){
               color="primary"
               onClick={handleClick}
               >
-              Edit
+              {translate("app.edit")}
               </Button>
           );
           }
@@ -65,7 +65,7 @@ export default function Table({ onCreate, onEdit }){
     }, []);
 
   return (
-    <MainCard title="Item List"
+    <MainCard title={translate("app.title.itemListTitle")}
       secondary={
         <Button
           variant="contained"
@@ -73,7 +73,7 @@ export default function Table({ onCreate, onEdit }){
           startIcon={<AddIcon />}
           onClick={onCreate}
         >
-          Create
+          {translate("app.create")}
         </Button>
       }
     >

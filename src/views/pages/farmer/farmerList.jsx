@@ -7,8 +7,9 @@ import { Button } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 import CustomTable from '../../../ui-component/components/CustomeTable';
 import { fetchFarmerList, fetchFarmerDetails } from '../../../api/farmer-apis';
+import { useTranslation } from 'react-i18next';
 
-export default function FarmerTable({ onCreate, onEdit }){
+export default function FarmerTable({ onCreate, onEdit, translate }){
 
     const { lang } = useConfig();
     const [farmerList, setFarmerList] = useState([]);
@@ -19,15 +20,14 @@ export default function FarmerTable({ onCreate, onEdit }){
       farmerNameFied = 'farmerNameMh';
     }
     
-
     const columns = [
-      { field: 'id', headerName: 'ID', width: 90 },
-      { field: farmerNameFied, headerName: 'Name', flex: 1 },
-      { field: 'email', headerName: 'Email', flex: 1 },
-      { field: 'contactNo', headerName: 'Contact No', width: 150 },
+      { field: 'id', headerName: translate('app.title.id'), width: 90 },
+      { field: farmerNameFied, headerName: translate('app.title.farmerName'), flex: 1 },
+      { field: 'email', headerName: translate('app.title.email'), flex: 1 },
+      { field: 'contactNo', headerName: translate('app.title.contactNo'), width: 150 },
         {
             field: 'Action',
-            headerName: 'Action',
+            headerName: translate('app.action'),
             width: 150,
             sortable: false,
             renderCell: (params) => {
@@ -46,7 +46,7 @@ export default function FarmerTable({ onCreate, onEdit }){
                 color="primary"
                 onClick={handleClick}
                 >
-                Edit
+                {translate("app.edit")}
                 </Button>
             );
             }
@@ -70,7 +70,7 @@ export default function FarmerTable({ onCreate, onEdit }){
     }
 
   return (
-    <MainCard title="Farmers List"
+    <MainCard title={translate("app.title.farmerListTitle")}
       secondary={
         <Button
           variant="contained"
@@ -78,7 +78,7 @@ export default function FarmerTable({ onCreate, onEdit }){
           startIcon={<AddIcon />}
           onClick={createFarmer}
         >
-          Create
+          {translate("app.create")}
         </Button>
       }
     >

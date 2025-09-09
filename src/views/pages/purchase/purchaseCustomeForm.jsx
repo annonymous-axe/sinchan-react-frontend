@@ -12,17 +12,29 @@ import {DatePicker} from '@mui/x-date-pickers/DatePicker';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import SubTableForm from './purchaseItemTableForm';
 import { savePurchase } from '../../../api/purchase-apis';
+import useConfig from '../../../hooks/useConfig';
+import Sanscript from '@indic-transliteration/sanscript';
 
-const CustomForm = ({ onBack, purchase }) => {
+const CustomForm = ({ onBack, purchase, translate }) => {
+
+    const { lang } = useConfig();
 
     // to handle form data
     const [formData, setFormData] = useState(purchase);
 
-    const handleChange = (e) => {
-        setFormData((prev) => ({
-        ...prev,
-        [e.target.name]: e.target.value
+      const handleChange = (e) => {
+          setFormData((prev) => ({
+          ...prev,
+          [e.target.name]: e.target.value
         }));
+
+      if(e.target.name == 'supplierNameEn'){
+        const opts = { syncope: true };
+        setFormData((prev) => ({
+          ...prev,
+          supplierNameMr: Sanscript.t(e.target.value, "itrans", "devanagari", opts)
+        }));
+      }
     };
 
     const handleSubmit = async (e) => {
@@ -34,7 +46,7 @@ const CustomForm = ({ onBack, purchase }) => {
 
 
   return (
-    <MainCard title="Farmer Form">
+    <MainCard title={translate("app.title.pOFormTitle")}>
       <Box component="form" onSubmit={handleSubmit} noValidate>
         <Grid container spacing={3}>
 
@@ -50,6 +62,10 @@ const CustomForm = ({ onBack, purchase }) => {
           </Grid>
 
           <Grid item xs={12} sm={6}>
+
+          </Grid>          
+
+          <Grid item xs={12} sm={6}>
             <TextField
               fullWidth
               label="Suplier"
@@ -59,6 +75,17 @@ const CustomForm = ({ onBack, purchase }) => {
               required
             />
           </Grid>
+
+          <Grid item xs={12} sm={6}>
+            <TextField
+              fullWidth
+              label="पुरवठादार"
+              name="supplierNameMr"
+              value={formData.supplierNameMr}
+              onChange={handleChange}
+              required
+            />
+          </Grid>          
 
           <Grid item xs={12} sm={6}>
             <LocalizationProvider dateAdapter={AdapterDayjs}>
@@ -77,14 +104,14 @@ const CustomForm = ({ onBack, purchase }) => {
             <TextField
               fullWidth
               label="Bill No"
-              name="billNo"
-              value={formData.billNo}
+              name="billNumber"
+              value={formData.billNumber}
               onChange={handleChange}
               required
             />
           </Grid>
 
-          <SubTableForm purchase={formData} setPurchase={setFormData} tableTitle={"Item List"}/>
+          <SubTableForm purchase={formData} setPurchase={setFormData} tableTitle={translate("app.itemListTitle")} lang={lang} translate={translate} />
 
           {/* Buttons */}
           <Grid item xs={12} display="flex" justifyContent="flex-end" gap={2}>
@@ -93,11 +120,11 @@ const CustomForm = ({ onBack, purchase }) => {
               color="secondary"
               onClick={onBack}
             >
-              Back
+              {translate("app.back")}
             </Button>
             {formData.id==null &&
               <Button type="submit" variant="contained" color="primary">
-                Submit
+                {translate("app.submit")}
               </Button>            
             }
             {/* {formData.id!='' &&

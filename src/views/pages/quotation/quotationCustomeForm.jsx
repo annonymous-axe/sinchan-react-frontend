@@ -11,8 +11,11 @@ import SubTableForm from './quotationSubTableForm';
 import SimCardDownloadIcon from '@mui/icons-material/SimCardDownload';
 import { generateInvoice } from '../../../api/invoice-apis';
 import Loader from '../../../ui-component/Loader';
+import useConfig from '../../../hooks/useConfig';
 
 const CustomForm = ({ onBack, invoice }) => {
+
+    const{ lang } = useConfig();
 
     // to handle form data
     const [formData, setFormData] = useState(invoice);
@@ -37,7 +40,7 @@ const CustomForm = ({ onBack, invoice }) => {
                 fullWidth
                 label="Farmer Name"
                 name="farmerName"
-                value={formData.farmerNameEn}
+                value={lang ? formData.farmerNameMh : formData.farmerNameEn}
                 InputProps={{ readonly: true }}
                 required
               />
@@ -144,7 +147,7 @@ const CustomForm = ({ onBack, invoice }) => {
               />
             </Grid>      
 
-            <SubTableForm invoice={formData} tableTitle={"Item List"}/>
+            <SubTableForm invoice={formData} tableTitle={"Item List"} lang={lang}/>
 
             {/* Buttons */}
             <Grid item xs={12} display="flex" justifyContent="flex-end" gap={2}>

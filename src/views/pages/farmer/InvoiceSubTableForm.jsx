@@ -19,7 +19,7 @@ import MainCard from '../../../ui-component/cards/MainCard';
 import { fetchCategoryList } from '../../../api/category-apis';
 import { fetchItemListFromCategoryId, fetchItemDetailsFromItemId } from '../../../api/item-apis';
 
-const SubTableForm = ({ invoice, setInvoice, tableTitle }) => {
+const SubTableForm = ({ invoice, setInvoice, tableTitle, translate }) => {
   const [categoryList, setCategoryList] = useState([]);
   // const [itemList, setItemList] = useState([]);
 
@@ -95,15 +95,15 @@ const SubTableForm = ({ invoice, setInvoice, tableTitle }) => {
             <Table sx={{ borderCollapse: 'collapse', borderSpacing: 0, '& td, & th': { padding: '8px 2px', } }}>
               <TableHead sx={{ backgroundColor: 'primary.light' }}>
                 <TableRow>
-                  <TableCell sx={{ fontWeight: 600, minWidth: 200 } }>Category</TableCell>
-                  <TableCell sx={{ fontWeight: 600, minWidth: 200 }}>Item</TableCell>
-                  <TableCell sx={{ fontWeight: 600 }}>Avl. Qty</TableCell>
-                  <TableCell sx={{ fontWeight: 600 }}>CML No.</TableCell>
-                  <TableCell sx={{ fontWeight: 600 }}>Qty</TableCell>
-                  <TableCell sx={{ fontWeight: 600 }}>Unit</TableCell>
-                  <TableCell sx={{ fontWeight: 600 }}>Rate</TableCell>
-                  <TableCell sx={{ fontWeight: 600 }}>Total</TableCell>
-                  <TableCell align="center" sx={{ fontWeight: 600 }}>Action</TableCell>
+                  <TableCell sx={{ fontWeight: 600, minWidth: 200 } }>{translate("app.title.category")}</TableCell>
+                  <TableCell sx={{ fontWeight: 600, minWidth: 200 }}>{translate("app.title.item")}</TableCell>
+                  <TableCell sx={{ fontWeight: 600 }}>{translate("app.title.avlQty")}</TableCell>
+                  <TableCell sx={{ fontWeight: 600 }}>{translate("app.title.cmlNo")}</TableCell>
+                  <TableCell sx={{ fontWeight: 600 }}>{translate("app.title.qty")}</TableCell>
+                  <TableCell sx={{ fontWeight: 600 }}>{translate("app.title.unit")}</TableCell>
+                  <TableCell sx={{ fontWeight: 600 }}>{translate("app.title.rate")}</TableCell>
+                  <TableCell sx={{ fontWeight: 600 }}>{translate("app.title.total")}</TableCell>
+                  <TableCell align="center" sx={{ fontWeight: 600 }}>{translate("app.action")}</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
@@ -203,7 +203,7 @@ const SubTableForm = ({ invoice, setInvoice, tableTitle }) => {
           </Paper>
           <Box mt={2} textAlign="center">
             <Button variant="outlined" startIcon={<Add />} onClick={addItemRow}>
-              Add Row
+              {translate("app.addRow")}
             </Button>
           </Box>
         </Box>

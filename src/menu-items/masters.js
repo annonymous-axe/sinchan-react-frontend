@@ -18,35 +18,35 @@ const icons = {
 
 const pages = {
   id: 'master',
-  title: 'Masters',
+  title: 'app.menus.master',
 //   caption: 'Masters',
   icon: icons.IconKey,
   type: 'group',
   children: [
     {
       id: 'farmer',
-      title: 'Farmer',
+      title: 'app.menus.farmer',
       type: 'item',
       icon: icons.GroupIcon,
       url: '/farmer/view'
     },
     {
       id: 'item',
-      title: 'Items',
+      title: 'app.menus.item',
       type: 'item',
       icon: icons.InventoryIcon,
       url: '/item/view'
     },
     {
       id: 'category',
-      title: 'Category',
+      title: 'app.menus.category',
       type: 'item',
       icon: icons.CategoryIcon,
       url: '/category/view'
     },
     {
       id: 'manufacturer',
-      title: 'Manufacturer',
+      title: 'app.menus.manufacturer',
       type: 'item',
       icon: icons.FactoryIcon,
       url: '/manufacturer/view'

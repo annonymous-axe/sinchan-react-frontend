@@ -1,9 +1,11 @@
 import { useState } from "react";
 import InvoiceTable from "./invoiceList";
 import CustomForm from "./InvoiceCustomeForm";
+import { useTranslation } from "react-i18next";
 
 export default function invoice(){
 
+    const {t} = useTranslation();
     const [showForm, setShowForm] = useState(false);
     const [invoice, setInvoice] = useState({
 
@@ -35,11 +37,11 @@ export default function invoice(){
     return(
         <div>
             {!showForm &&
-                <InvoiceTable onEdit={editInvoice} />
+                <InvoiceTable onEdit={editInvoice} translate={t}/>
             }
             
             {showForm &&
-                <CustomForm onBack={backInvoice} invoice={invoice}/>
+                <CustomForm onBack={backInvoice} invoice={invoice} translate={t}/>
             }
         </div>
     );

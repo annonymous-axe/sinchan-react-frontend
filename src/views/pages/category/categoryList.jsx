@@ -8,7 +8,7 @@ import { fetchManufacturerList, fetchManufacturerDetails } from '../../../api/ma
 import { fetchCategoryList } from '../../../api/category-apis';
 import useConfig from '../../../hooks/useConfig';
 
-export default function Table({ onCreate, onEdit }){
+export default function Table({ onCreate, onEdit, translate }){
 
     const { lang } = useConfig();
 
@@ -21,8 +21,8 @@ export default function Table({ onCreate, onEdit }){
     const [categoryList, setCategoryList] = useState([]);
 
     const columns = [
-      { field: 'id', headerName: 'ID', width: 90 },
-      { field: categoryNameFied, headerName: 'Category Name', flex: 1 },
+      { field: 'id', headerName: translate("app.title.id"), width: 90 },
+      { field: categoryNameFied, headerName: translate("app.title.category"), flex: 1 },
     ];    
 
     // initialized list
@@ -38,7 +38,7 @@ export default function Table({ onCreate, onEdit }){
     }, []);
 
   return (
-    <MainCard title="Category List"
+    <MainCard title={translate("app.title.categoryListTitle")}
       // secondary={
       //   <Button
       //     variant="contained"

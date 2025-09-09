@@ -1,8 +1,11 @@
 import { useState } from "react";
 import QuotationTable from "./quotationList";
 import QuotationForm from "./quotationCustomeForm";
+import { useTranslation } from "react-i18next";
 
 export default function invoice(){
+
+    const {t} = useTranslation();
 
     const initialStateOfForm = {
 
@@ -50,11 +53,11 @@ export default function invoice(){
     return(
         <div>
             {!showForm &&
-                <QuotationTable onCreate={createInvoice} onEdit={editInvoice} />
+                <QuotationTable onCreate={createInvoice} onEdit={editInvoice} translate={t}/>
             }
             
             {showForm &&
-                <QuotationForm onBack={backInvoice} invoice={invoice}/>
+                <QuotationForm onBack={backInvoice} invoice={invoice} translate={t}/>
             }
         </div>
     );

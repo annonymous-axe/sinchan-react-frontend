@@ -1,5 +1,5 @@
 // src/components/CustomForm.js
-import React, { useState } from 'react';
+import { useState } from 'react';
 import {
   Box,
   Grid,
@@ -15,17 +15,36 @@ import SubTableForm from './InvoiceSubTableForm';
 import { fetchManufacturerList } from '../../../api/manufacturer-apis';
 import { saveInvoice } from '../../../api/invoice-apis';
 import { saveQuotation } from '../../../api/quotation-apis';
+import { Sanscript } from '@indic-transliteration/sanscript';
+import useConfig from '../../../hooks/useConfig';
 
-const CustomForm = ({ onBack, onGenerateInvoice, farmer, showInvoiceItemList }) => {
+const CustomForm = ({ onBack, onGenerateInvoice, farmer, showInvoiceItemList, translate }) => {
 
     // to handle form data
     const [formData, setFormData] = useState(farmer);
+    const { lang } = useConfig();
 
-    const handleChange = (e) => {
+    const handleChange = async (e) => {
         setFormData((prev) => ({
-        ...prev,
-        [e.target.name]: e.target.value
+          ...prev,
+          [e.target.name]: e.target.value
         }));
+
+        if(e.target.name == 'farmerNameEn'){
+          const opts = { syncope: true };
+          setFormData((prev) => ({
+            ...prev,
+            farmerNameMh: Sanscript.t(e.target.value, "itrans", "devanagari", opts)
+          }));
+        }
+
+        if(e.target.name == 'addressEn'){
+          const opts = { syncope: true };
+          setFormData((prev) => ({
+            ...prev,
+            addressMh: Sanscript.t(e.target.value, "itrans", "devanagari", opts)
+          }));
+        }        
     };
 
     const handleSubmit = async (e) => {
@@ -74,21 +93,24 @@ const CustomForm = ({ onBack, onGenerateInvoice, farmer, showInvoiceItemList }) 
     const [tehsilList, setTehsilList] = useState([
         {
             talukaId: -1,
-            talukaName: "--- Select ---"
+            talukaNameEn: "--- Select ---",
+            talukaNameMh: "--- Select ---"
         }
     ]);
 
     const [districtList, setDistrictList] = useState([
         {
             districtId: -1,
-            districtName: "--- Select ---"
+            districtNameEn: "--- Select ---",
+            districtNameMh: "--- Select ---"
         }
     ]);
 
     const [manufacturerList, setManufacturerList] = useState([
         {
             id: -1,
-            name: "--- Select ---"
+            nameEn: "--- Select ---",
+            nameMh: "--- Select ---"
         }
     ]);    
 
@@ -125,7 +147,7 @@ const CustomForm = ({ onBack, onGenerateInvoice, farmer, showInvoiceItemList }) 
 
 
   return (
-    <MainCard title="Farmer Form">
+    <MainCard title={translate("app.title.farmerFormTitle")}>
       <Box component="form" onSubmit={handleSubmit} noValidate>
         <Grid container spacing={3}>
 
@@ -135,10 +157,24 @@ const CustomForm = ({ onBack, onGenerateInvoice, farmer, showInvoiceItemList }) 
               label="Farmer Name"
               name="farmerNameEn"
               value={formData.farmerNameEn}
-              onChange={handleChange}
+              onChange={(e) => {
+                handleChange(e);
+                translateTextToHindi(e);
+              }}
               required
             />
           </Grid>
+
+          <Grid item xs={12} sm={6}>
+            <TextField
+              fullWidth
+              label="शेतकरीचे नाव"
+              name="farmerNameMh"
+              value={formData.farmerNameMh}
+              onChange={handleChange}
+              required
+            />
+          </Grid>          
 
           <Grid item xs={12} sm={6}>
             <TextField
@@ -197,7 +233,7 @@ const CustomForm = ({ onBack, onGenerateInvoice, farmer, showInvoiceItemList }) 
             >
               {sanchList.map((option) => (
                 <MenuItem key={option.intKey} value={option.intKey}>
-                  {option.stringValue}
+                  {lang ? option.stringValue : option.stringValue2}
                 </MenuItem>
               ))}
             </TextField>
@@ -214,8 +250,8 @@ const CustomForm = ({ onBack, onGenerateInvoice, farmer, showInvoiceItemList }) 
               required
             >
               {districtList.map((district) => (
-                <MenuItem key={district.districtNameEn} value={district.districtId}>
-                  {district.districtNameEn}
+                <MenuItem key={district.districtId} value={district.districtId}>
+                  {lang ? district.districtNameEn : district.districtNameMh}
                 </MenuItem>
               ))}
             </TextField>
@@ -233,7 +269,7 @@ const CustomForm = ({ onBack, onGenerateInvoice, farmer, showInvoiceItemList }) 
             >
               {tehsilList.map((tehsil) => (
                 <MenuItem key={tehsil.tehsilNameEn} value={tehsil.tehsilId}>
-                  {tehsil.tehsilNameEn}
+                  {lang ? tehsil.tehsilNameEn : tehsil.tehsilNameMh}
                 </MenuItem>
               ))}
             </TextField>
@@ -252,14 +288,16 @@ const CustomForm = ({ onBack, onGenerateInvoice, farmer, showInvoiceItemList }) 
               >
                 {manufacturerList.map((man) => (
                   <MenuItem key={man.id} value={man.id}>
-                    {man.nameEn}
+                    {lang ? man.nameEn : man.nameMh}
                   </MenuItem>
                 ))}
               </TextField>
             </Grid> 
-          }             
+          }
 
-          <Grid item xs={12}>
+          <Grid items xs={12} />
+
+          <Grid item xs={6}>
             <TextField
               fullWidth
               label="Address"
@@ -269,11 +307,23 @@ const CustomForm = ({ onBack, onGenerateInvoice, farmer, showInvoiceItemList }) 
               multiline
               rows={4}
             />
-          </Grid>      
+          </Grid>
+          
+          <Grid item xs={6}>
+            <TextField
+              fullWidth
+              label="पत्ता"
+              name="addressMh"
+              value={formData.addressMh}
+              onChange={handleChange}
+              multiline
+              rows={4}
+            />
+          </Grid>                
 
 
           {showInvoiceItemList &&
-            <SubTableForm invoice={formData} setInvoice={setFormData} tableTitle={"Invoice List"}/>
+            <SubTableForm invoice={formData} setInvoice={setFormData} tableTitle={translate("app.itemListTitle")} translate={translate}/>
           }
 
           {/* Buttons */}
@@ -283,23 +333,23 @@ const CustomForm = ({ onBack, onGenerateInvoice, farmer, showInvoiceItemList }) 
               color="secondary"
               onClick={onBack}
             >
-              Back
+              {translate("app.back")}
             </Button>
             {formData.id=='' &&
               <Button type="submit" variant="contained" color="primary">
-                Submit
+                {translate("app.submit")}
               </Button>            
             }
             {formData.id!='' && !showInvoiceItemList &&
               <>
               <Button variant="contained" color="primary" onClick={handleUdateFarmer}>
-                Update
+                {translate("app.update")}
               </Button>
               <Button variant="contained" color="error" onClick={handleDeleteFarmer}>
-                Delete
+                {translate("app.delete")}
               </Button>
               <Button variant="contained" color="success" onClick={handleGenerateInvoice}>
-                Generate Invoice/Quotation
+                {translate("app.generateInvoiceQuation")}
               </Button>              
               </>
             }
@@ -307,10 +357,10 @@ const CustomForm = ({ onBack, onGenerateInvoice, farmer, showInvoiceItemList }) 
             {formData.id!='' && showInvoiceItemList &&
               <>
                 <Button variant="outlined" color="primary" onClick={generateInvoice}>
-                  Generate Invoice
+                  {translate("app.generateInvoice")}
                 </Button>
                 <Button variant="outlined" color="primary" onClick={generateQuotation}>
-                  Generate Quotation
+                  {translate("app.generateQuotation")}
                 </Button>
               </>
             }            

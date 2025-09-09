@@ -25,13 +25,17 @@ import '@fontsource/poppins/500.css';
 import '@fontsource/poppins/600.css';
 import '@fontsource/poppins/700.css';
 
+import './i18n';
+import { Suspense } from 'react';
 // ==============================|| REACT DOM RENDER ||============================== //
 
 const container = document.getElementById('root');
 const root = createRoot(container);
 root.render(
   <ConfigProvider>
-    <App />
+    <Suspense fallback={<div>Loading languages...</div>}>
+      <App />
+    </Suspense>
   </ConfigProvider>
 );
 

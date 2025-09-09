@@ -12,10 +12,11 @@ import MainCard from 'ui-component/cards/MainCard';
 
 // ==============================|| CUSTOMIZATION - FONT FAMILY ||============================== //
 
-export default function FontFamilyPage() {
+export default function FontFamilyPage({ loader }) {
   const { fontFamily, onChangeFontFamily } = useConfig();
 
   const handleFontChange = (event) => {
+    loader("Changing Font Style");
     onChangeFontFamily(event.target.value);
   };
 
@@ -42,7 +43,7 @@ export default function FontFamilyPage() {
 
   return (
     <Stack spacing={2.5} sx={{ p: 2, width: '100%' }}>
-      <Typography variant="h5">FONT STYLE</Typography>
+      <Typography variant="h4">FONT STYLE</Typography>
       <RadioGroup aria-label="payment-card" name="payment-card" value={fontFamily} onChange={handleFontChange}>
         <Grid container spacing={1.25}>
           {fonts.map((item, index) => (
